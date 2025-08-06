@@ -37,6 +37,9 @@ func NewDataSet() *DataSet {
 	}
 }
 
+// The suggested context to use in a Croissant Json-LD file.
+//
+//nolint:gochecknoglobals
 var SuggestedContext = map[string]interface{}{
 	"@language":  "en",
 	"@vocab":     "https://schema.org/",
