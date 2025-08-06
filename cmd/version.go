@@ -1,3 +1,5 @@
+// Output package version info.
+//
 //nolint:gochecknoinits,gochecknoglobals
 package cmd
 

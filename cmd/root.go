@@ -21,9 +21,9 @@ var version string
 
 // RootCmd represents the base command when called without any subcommands.
 var RootCmd = &cobra.Command{
-	Use:   "",
-	Short: "Short desc",
-	Long:  `Long description`,
+	Use:   "croissant",
+	Short: "A cli for Croissant files",
+	Long:  `A simple cli for interacting with 🥐 Croissant dataset files.`,
 }
 
 // Execute adds all child commands to the root command sets flags appropriately.
