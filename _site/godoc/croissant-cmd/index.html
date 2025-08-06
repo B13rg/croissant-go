@@ -113,6 +113,7 @@
                 <h1 id="cmd">cmd</h1>
 <pre><code class="language-go">import &quot;github.com/b13rg/croissant-go/cmd&quot;
 </code></pre>
+<p>Defines the cli-interface commands available to the user.</p>
 <p>Output package version info.</p>
 <h2 id="index">Index</h2>
 <ul>
@@ -159,41 +160,41 @@
 }
 </code></pre>
 <p><a name="Colorize"></a></p>
-<h2 id="func-colorize">func <a href="https://github.com:b13rg/croissant-go/blob/main/cmd/logging.go#L67">Colorize</a></h2>
+<h2 id="func-colorize">func <a href="https://github.com:b13rg/croissant-go/blob/main/cmd/logging.go#L68">Colorize</a></h2>
 <pre><code class="language-go">func Colorize(input interface{}, colorNum int, disabled bool) string
 </code></pre>
 <p>Colorize function from zerolog console.go file to replicate their coloring functionality. Source: https://github.com/rs/zerolog/blob/a21d6107dcda23e36bc5cfd00ce8fdbe8f3ddc23/console.go#L389 Replicated here because it's a private function.</p>
 <p><a name="ConfigureLogger"></a></p>
-<h2 id="func-configurelogger">func <a href="https://github.com:b13rg/croissant-go/blob/main/cmd/logging.go#L12">ConfigureLogger</a></h2>
+<h2 id="func-configurelogger">func <a href="https://github.com:b13rg/croissant-go/blob/main/cmd/logging.go#L13">ConfigureLogger</a></h2>
 <pre><code class="language-go">func ConfigureLogger(debug bool)
 </code></pre>
 <p><a name="Execute"></a></p>
-<h2 id="func-execute">func <a href="https://github.com:b13rg/croissant-go/blob/main/cmd/root.go#L31">Execute</a></h2>
+<h2 id="func-execute">func <a href="https://github.com:b13rg/croissant-go/blob/main/cmd/root.go#L30">Execute</a></h2>
 <pre><code class="language-go">func Execute(ver string)
 </code></pre>
 <p>Execute adds all child commands to the root command sets flags appropriately. This is called by main.main(). It only needs to happen once to the rootCmd.</p>
 <p><a name="InitConfig"></a></p>
-<h2 id="func-initconfig">func <a href="https://github.com:b13rg/croissant-go/blob/main/cmd/root.go#L75">InitConfig</a></h2>
+<h2 id="func-initconfig">func <a href="https://github.com:b13rg/croissant-go/blob/main/cmd/root.go#L74">InitConfig</a></h2>
 <pre><code class="language-go">func InitConfig()
 </code></pre>
 <p>InitConfig reads in config file and ENV variables if set.</p>
 <p><a name="ProfilingFinalizer"></a></p>
-<h2 id="func-profilingfinalizer">func <a href="https://github.com:b13rg/croissant-go/blob/main/cmd/root.go#L91">ProfilingFinalizer</a></h2>
+<h2 id="func-profilingfinalizer">func <a href="https://github.com:b13rg/croissant-go/blob/main/cmd/root.go#L90">ProfilingFinalizer</a></h2>
 <pre><code class="language-go">func ProfilingFinalizer()
 </code></pre>
 <p>Stop profiling and write cpu and memory profiling files if configured.</p>
 <p><a name="ProfilingInitializer"></a></p>
-<h2 id="func-profilinginitializer">func <a href="https://github.com:b13rg/croissant-go/blob/main/cmd/root.go#L116">ProfilingInitializer</a></h2>
+<h2 id="func-profilinginitializer">func <a href="https://github.com:b13rg/croissant-go/blob/main/cmd/root.go#L115">ProfilingInitializer</a></h2>
 <pre><code class="language-go">func ProfilingInitializer()
 </code></pre>
 <p>Sets up program profiling.</p>
 <p><a name="SetupLogger"></a></p>
-<h2 id="func-setuplogger">func <a href="https://github.com:b13rg/croissant-go/blob/main/cmd/logging.go#L38">SetupLogger</a></h2>
+<h2 id="func-setuplogger">func <a href="https://github.com:b13rg/croissant-go/blob/main/cmd/logging.go#L39">SetupLogger</a></h2>
 <pre><code class="language-go">func SetupLogger(enableColor bool) zerolog.Logger
 </code></pre>
 <p>Configure zerolog with some defaults and cleanup error formatting.</p>
 <p><a name="CmdRootOptions"></a></p>
-<h2 id="type-cmdrootoptions">type <a href="https://github.com:b13rg/croissant-go/blob/main/cmd/root.go#L40-L51">CmdRootOptions</a></h2>
+<h2 id="type-cmdrootoptions">type <a href="https://github.com:b13rg/croissant-go/blob/main/cmd/root.go#L39-L50">CmdRootOptions</a></h2>
 <p>Default options that are available to all commands.</p>
 <pre><code class="language-go">type CmdRootOptions struct {
     // log more information about what the tool is doing. Overrides --loglevel

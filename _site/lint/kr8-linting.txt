@@ -1,0 +1,13 @@
+kr8/pkg/croissant/types.go:31:10   exhaustruct  croissant.DataSet is missing fields Name, URL, Creator, DatePublished, Keywords, Publisher, Version, DateCreated, DateModified, SameAs, SdLicense, InLanguage, Distribution, IsLiveDataset, CiteAs
+kr8/pkg/croissant/types.go:100:10  exhaustruct  croissant.FileObject is missing fields NType, Name, ContentURL, ContentSize, EncodingFormat, Sha256, ContainedIn
+kr8/pkg/croissant/types.go:111:10  exhaustruct  croissant.DataSet is missing fields Context, NType, ConformsTo, Description, License, Name, URL, Creator, DatePublished, Keywords, Publisher, Version, DateCreated, DateModified, SameAs, SdLicense, InLanguage, Distribution, IsLiveDataset, CiteAs
+kr8/pkg/croissant/types.go:121:10  exhaustruct  croissant.FileResource is missing fields FileObject, FileSet
+kr8/pkg/croissant/types.go:136:10  exhaustruct  croissant.RecordSet is missing fields NType, Field, Key, Data, Examples, Source
+kr8/pkg/croissant/types.go:145:10  exhaustruct  croissant.DataType is missing field DataType
+kr8/pkg/croissant/types.go:162:10  exhaustruct  croissant.Field is missing fields NType, Source, DataType, Repeated, References, SubField, ParentField, EquivalentProperty
+kr8/pkg/croissant/types.go:174:10  exhaustruct  croissant.Source is missing fields DataSource, FileObject, FileSet, RecordSet
+kr8/pkg/croissant/types.go:188:10  exhaustruct  croissant.DataSource is missing fields NType, FileObject, FileSet, RecordSet, Extract, Transform, Format
+kr8/pkg/croissant/types.go:198:10  exhaustruct  croissant.Extract is missing fields FileProperty, Column, JsonPath
+kr8/pkg/croissant/types.go:208:10  exhaustruct  croissant.Transform is missing fields Delimiter, Regex, JsonQuery
+kr8/pkg/croissant/types.go:218:10  exhaustruct  croissant.Split is missing fields TrainSplit, TestSplit, ValidationSplit
+kr8/pkg/croissant/types.go:230:10  exhaustruct  croissant.ContentExtractionEnumeration is missing fields FullPath, Filename, Content, Lines, LineNumbers

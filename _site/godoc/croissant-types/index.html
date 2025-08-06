@@ -209,7 +209,7 @@
 <li><a href="#NewTransform">func NewTransform() *Transform</a></li>
 </ul>
 <h2 id="variables">Variables</h2>
-<p><a name="SuggestedContext"></a></p>
+<p><a name="SuggestedContext"></a>The suggested context to use in a Croissant Json-LD file.</p>
 <pre><code class="language-go">var SuggestedContext = map[string]interface{}{
     &quot;@language&quot;:  &quot;en&quot;,
     &quot;@vocab&quot;:     &quot;https://schema.org/&quot;,
@@ -257,7 +257,7 @@
 }
 </code></pre>
 <p><a name="ContentExtractionEnumeration"></a></p>
-<h2 id="type-contentextractionenumeration">type <a href="https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/types.go#L218-L224">ContentExtractionEnumeration</a></h2>
+<h2 id="type-contentextractionenumeration">type <a href="https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/types.go#L221-L227">ContentExtractionEnumeration</a></h2>
 <pre><code class="language-go">type ContentExtractionEnumeration struct {
     FullPath    string
     Filename    string
@@ -267,7 +267,7 @@
 }
 </code></pre>
 <p><a name="NewContentExtractionEnumeration"></a></p>
-<h3 id="func-newcontentextractionenumeration">func <a href="https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/types.go#L226">NewContentExtractionEnumeration</a></h3>
+<h3 id="func-newcontentextractionenumeration">func <a href="https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/types.go#L229">NewContentExtractionEnumeration</a></h3>
 <pre><code class="language-go">func NewContentExtractionEnumeration() *ContentExtractionEnumeration
 </code></pre>
 <p><a name="DataSet"></a></p>
@@ -303,11 +303,11 @@
 <pre><code class="language-go">func NewDataSet() *DataSet
 </code></pre>
 <p><a name="NewFileSet"></a></p>
-<h3 id="func-newfileset">func <a href="https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/types.go#L107">NewFileSet</a></h3>
+<h3 id="func-newfileset">func <a href="https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/types.go#L110">NewFileSet</a></h3>
 <pre><code class="language-go">func NewFileSet() *DataSet
 </code></pre>
 <p><a name="DataSource"></a></p>
-<h2 id="type-datasource">type <a href="https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/types.go#L174-L182">DataSource</a></h2>
+<h2 id="type-datasource">type <a href="https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/types.go#L177-L185">DataSource</a></h2>
 <pre><code class="language-go">type DataSource struct {
     NType      string      `json:&quot;@type&quot;`
     FileObject *FileObject `json:&quot;fileObject&quot;`
@@ -319,22 +319,22 @@
 }
 </code></pre>
 <p><a name="NewDataSource"></a></p>
-<h3 id="func-newdatasource">func <a href="https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/types.go#L184">NewDataSource</a></h3>
+<h3 id="func-newdatasource">func <a href="https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/types.go#L187">NewDataSource</a></h3>
 <pre><code class="language-go">func NewDataSource() *DataSource
 </code></pre>
 <p><a name="DataType"></a></p>
-<h2 id="type-datatype">type <a href="https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/types.go#L136-L139">DataType</a></h2>
+<h2 id="type-datatype">type <a href="https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/types.go#L139-L142">DataType</a></h2>
 <pre><code class="language-go">type DataType struct {
     // MIME type
     DataType string
 }
 </code></pre>
 <p><a name="NewDataType"></a></p>
-<h3 id="func-newdatatype">func <a href="https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/types.go#L141">NewDataType</a></h3>
+<h3 id="func-newdatatype">func <a href="https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/types.go#L144">NewDataType</a></h3>
 <pre><code class="language-go">func NewDataType() *DataType
 </code></pre>
 <p><a name="Extract"></a></p>
-<h2 id="type-extract">type <a href="https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/types.go#L188-L192">Extract</a></h2>
+<h2 id="type-extract">type <a href="https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/types.go#L191-L195">Extract</a></h2>
 <pre><code class="language-go">type Extract struct {
     FileProperty ContentExtractionEnumeration
     Column       string `json:&quot;column&quot;`
@@ -342,11 +342,11 @@
 }
 </code></pre>
 <p><a name="NewExtract"></a></p>
-<h3 id="func-newextract">func <a href="https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/types.go#L194">NewExtract</a></h3>
+<h3 id="func-newextract">func <a href="https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/types.go#L197">NewExtract</a></h3>
 <pre><code class="language-go">func NewExtract() *Extract
 </code></pre>
 <p><a name="Field"></a></p>
-<h2 id="type-field">type <a href="https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/types.go#L147-L156">Field</a></h2>
+<h2 id="type-field">type <a href="https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/types.go#L150-L159">Field</a></h2>
 <pre><code class="language-go">type Field struct {
     NType              string   `json:&quot;@type&quot;`
     Source             Source   `json:&quot;source&quot;`
@@ -359,11 +359,11 @@
 }
 </code></pre>
 <p><a name="NewField"></a></p>
-<h3 id="func-newfield">func <a href="https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/types.go#L158">NewField</a></h3>
+<h3 id="func-newfield">func <a href="https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/types.go#L161">NewField</a></h3>
 <pre><code class="language-go">func NewField() *Field
 </code></pre>
 <p><a name="FileObject"></a></p>
-<h2 id="type-fileobject">type <a href="https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/types.go#L86-L94">FileObject</a></h2>
+<h2 id="type-fileobject">type <a href="https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/types.go#L89-L97">FileObject</a></h2>
 <pre><code class="language-go">type FileObject struct {
     NType          string       `json:&quot;@type&quot;`
     Name           string       `json:&quot;sc:name&quot;`
@@ -375,11 +375,11 @@
 }
 </code></pre>
 <p><a name="NewFileObject"></a></p>
-<h3 id="func-newfileobject">func <a href="https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/types.go#L96">NewFileObject</a></h3>
+<h3 id="func-newfileobject">func <a href="https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/types.go#L99">NewFileObject</a></h3>
 <pre><code class="language-go">func NewFileObject() *FileObject
 </code></pre>
 <p><a name="FileResource"></a></p>
-<h2 id="type-fileresource">type <a href="https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/types.go#L112-L115">FileResource</a></h2>
+<h2 id="type-fileresource">type <a href="https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/types.go#L115-L118">FileResource</a></h2>
 <p>Type used to group data resource objects together.</p>
 <pre><code class="language-go">type FileResource struct {
     FileObject *FileObject
@@ -387,11 +387,11 @@
 }
 </code></pre>
 <p><a name="NewFileResource"></a></p>
-<h3 id="func-newfileresource">func <a href="https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/types.go#L117">NewFileResource</a></h3>
+<h3 id="func-newfileresource">func <a href="https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/types.go#L120">NewFileResource</a></h3>
 <pre><code class="language-go">func NewFileResource() *FileResource
 </code></pre>
 <p><a name="FileSet"></a></p>
-<h2 id="type-fileset">type <a href="https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/types.go#L100-L105">FileSet</a></h2>
+<h2 id="type-fileset">type <a href="https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/types.go#L103-L108">FileSet</a></h2>
 <pre><code class="language-go">type FileSet struct {
     NType       string       `json:&quot;@type&quot;`
     ContainedIn FileResource `json:&quot;containedIn&quot;`
@@ -400,15 +400,15 @@
 }
 </code></pre>
 <p><a name="Format"></a></p>
-<h2 id="type-format">type <a href="https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/types.go#L145">Format</a></h2>
+<h2 id="type-format">type <a href="https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/types.go#L148">Format</a></h2>
 <pre><code class="language-go">type Format struct{}
 </code></pre>
 <p><a name="JSON"></a></p>
-<h2 id="type-json">type <a href="https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/types.go#L121">JSON</a></h2>
+<h2 id="type-json">type <a href="https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/types.go#L124">JSON</a></h2>
 <pre><code class="language-go">type JSON string
 </code></pre>
 <p><a name="RecordSet"></a></p>
-<h2 id="type-recordset">type <a href="https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/types.go#L123-L130">RecordSet</a></h2>
+<h2 id="type-recordset">type <a href="https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/types.go#L126-L133">RecordSet</a></h2>
 <pre><code class="language-go">type RecordSet struct {
     NType    string   `json:&quot;@type&quot;`
     Field    []Field  `json:&quot;field&quot;`
@@ -419,11 +419,11 @@
 }
 </code></pre>
 <p><a name="NewRecordSet"></a></p>
-<h3 id="func-newrecordset">func <a href="https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/types.go#L132">NewRecordSet</a></h3>
+<h3 id="func-newrecordset">func <a href="https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/types.go#L135">NewRecordSet</a></h3>
 <pre><code class="language-go">func NewRecordSet() *RecordSet
 </code></pre>
 <p><a name="Source"></a></p>
-<h2 id="type-source">type <a href="https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/types.go#L163-L168">Source</a></h2>
+<h2 id="type-source">type <a href="https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/types.go#L166-L171">Source</a></h2>
 <p>Type used to group data sources.</p>
 <pre><code class="language-go">type Source struct {
     DataSource *DataSource
@@ -433,11 +433,11 @@
 }
 </code></pre>
 <p><a name="NewSource"></a></p>
-<h3 id="func-newsource">func <a href="https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/types.go#L170">NewSource</a></h3>
+<h3 id="func-newsource">func <a href="https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/types.go#L173">NewSource</a></h3>
 <pre><code class="language-go">func NewSource() *Source
 </code></pre>
 <p><a name="Split"></a></p>
-<h2 id="type-split">type <a href="https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/types.go#L208-L212">Split</a></h2>
+<h2 id="type-split">type <a href="https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/types.go#L211-L215">Split</a></h2>
 <pre><code class="language-go">type Split struct {
     TrainSplit      string
     TestSplit       string
@@ -445,11 +445,11 @@
 }
 </code></pre>
 <p><a name="NewSplit"></a></p>
-<h3 id="func-newsplit">func <a href="https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/types.go#L214">NewSplit</a></h3>
+<h3 id="func-newsplit">func <a href="https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/types.go#L217">NewSplit</a></h3>
 <pre><code class="language-go">func NewSplit() *Split
 </code></pre>
 <p><a name="Transform"></a></p>
-<h2 id="type-transform">type <a href="https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/types.go#L198-L202">Transform</a></h2>
+<h2 id="type-transform">type <a href="https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/types.go#L201-L205">Transform</a></h2>
 <pre><code class="language-go">type Transform struct {
     Delimiter string
     Regex     string
@@ -457,7 +457,7 @@
 }
 </code></pre>
 <p><a name="NewTransform"></a></p>
-<h3 id="func-newtransform">func <a href="https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/types.go#L204">NewTransform</a></h3>
+<h3 id="func-newtransform">func <a href="https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/types.go#L207">NewTransform</a></h3>
 <pre><code class="language-go">func NewTransform() *Transform
 </code></pre>
               
