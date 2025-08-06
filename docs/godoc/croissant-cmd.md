@@ -4,7 +4,7 @@
 import "github.com/b13rg/croissant-go/cmd"
 ```
 
-Output package version info
+Output package version info.
 
 ## Index
 
