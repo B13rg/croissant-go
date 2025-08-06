@@ -46,11 +46,11 @@ tasks:
 
   02_mkdocs:
     desc: Uses mkdocs to build documentation site from docs
-    aliases: ["mkdocs"]
+    aliases: ["mkdocs", "docs"]
     cmds:
-      - rm -rf ./docs/cmd/*
-      - rm -rf ./docs/godoc/*
-      - rm -rf ./docs/schemas/*
+      - rm -rf ./docs/cmd/* && touch ./docs/cmd/.generated
+      - rm -rf ./docs/godoc/* && touch ./docs/godoc/.generated
+      - rm -rf ./docs/schemas/* && touch ./docs/schemas/.generated
       - go generate ./docs
       # references mkdocs.yml
       - mkdocs build
