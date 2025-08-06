@@ -9,7 +9,8 @@ import (
 	"os"
 	"strings"
 
-	cmd "github.com/b13rg/template-golang/cmd"
+	cmd "github.com/b13rg/croissant-go/cmd"
+	"github.com/b13rg/croissant-go/pkg/croissant"
 	"github.com/invopop/jsonschema"
 	"github.com/princjef/gomarkdoc"
 	"github.com/princjef/gomarkdoc/lang"
@@ -57,26 +58,24 @@ func GenerateTypeSchemas() error {
 	}
 
 	reflector, err := GenerateReflector(
-		"github.com/b13rg/template-golang/pkg/types",
-		"../pkg/types",
+		"github.com/b13rg/croissant-go/pkg/croissant", "../pkg/croissant",
 	)
 	if err != nil {
 		return err
 	}
 
 	reflector.AllowAdditionalProperties = true
-	// schema := reflector.Reflect(&types.YourTypeHere{})
+	schema := reflector.Reflect(&croissant.DataSet{})
 
-	// if err := WriteSchema("./schemas/schema.json", schema); err != nil {
-	// 	return err
-	// }
+	if err := WriteSchema("./schemas/generated-schema.json", schema); err != nil {
+		return err
+	}
 
 	return nil
 }
 
 // Copies various repo files into documentation directory.
 // Copies Readme, patching link paths.
-// Copies taskfile, for reference.
 func CopyRepoFiles() error {
 	destinationFile := "./README-repo.md"
 	iFile, err := os.ReadFile("../README.md")
@@ -86,17 +85,6 @@ func CopyRepoFiles() error {
 
 	fixed := strings.ReplaceAll(string(iFile), "docs/", "")
 	err = os.WriteFile(destinationFile, []byte(fixed), 0600)
-	if err != nil {
-		return err
-	}
-
-	// copy over referenced task file
-	destinationFile = "./Taskfile.yml"
-	iFile, err = os.ReadFile("../Taskfile.yml")
-	if err != nil {
-		return err
-	}
-	err = os.WriteFile(destinationFile, iFile, 0600)
 	if err != nil {
 		return err
 	}
@@ -111,7 +99,7 @@ func GoMarkDoc() error {
 	}
 
 	repo := lang.Repo{
-		Remote:        "https://github.com:b13rg/template-golang",
+		Remote:        "https://github.com:b13rg/croissant-go",
 		DefaultBranch: "main",
 		PathFromRoot:  "",
 	}
@@ -122,8 +110,8 @@ func GoMarkDoc() error {
 	}
 
 	docFiles := map[string]string{
-		"../cmd":       "tool-cmd.md",
-		"../pkg/types": "types.md",
+		"../cmd":           "croissant-cmd.md",
+		"../pkg/croissant": "croissant-types.md",
 		// "../pkg/jnetvm":           "kr8-jsonnet.md",
 		// "../pkg/kr8_cache":        "kr8-cache.md",
 		// "../pkg/kr8_types":        "kr8-types.md",

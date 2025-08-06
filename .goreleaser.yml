@@ -1,4 +1,4 @@
-project_name: template-golang
+project_name: croissant-go
 version: 2
 before:
   hooks:
