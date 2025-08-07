@@ -75,3 +75,8 @@ tasks:
       - go tool pprof -png -output ./profiling/heap.png ./{{.TOOL}} ./profiling/profile_heap.pb.gz
       #- go tool pprof -http=0.0.0.0:8654 ./{{.TOOL}} ./profiling/profile_cpu.pb.gz
       #- go tool pprof -http=0.0.0.0:8654 ./{{.TOOL}} ./profiling/profile_heap.pb.gz
+
+  sync-datasets:
+    desc: Sync datasets with local croissant repo
+    cmds:
+      - cp -r ../croissant/datasets/* ./test/croissant
