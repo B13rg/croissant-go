@@ -7,25 +7,23 @@ import (
 )
 
 type ClassRefItem struct {
-	Id string `json:"@id"`
+	Id string `json:"@id,omitempty"`
 }
 
-type ClassRefList struct {
-	Items []ClassRefItem
-}
+type ClassRefList []ClassRefItem
 
 func (ref *ClassRefList) UnmarshalJSON(data []byte) error {
 	// Try unmarshaling as a ClassRefItem
 	var single ClassRefItem
 	if err := json.Unmarshal(data, &single); err == nil {
-		ref.Items = []ClassRefItem{single}
+		*ref = []ClassRefItem{single}
 
 		return nil
 	}
 	// Try unmarshaling as a []ClassRefItem
 	var multi []ClassRefItem
 	if err := json.Unmarshal(data, &multi); err == nil {
-		ref.Items = multi
+		*ref = multi
 
 		return nil
 	}

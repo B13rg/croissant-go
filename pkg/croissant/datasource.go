@@ -3,21 +3,21 @@ package croissant
 
 type DataSource struct {
 	// Must be DataSource
-	NType string `json:"@type"`
+	NType string `json:"@type,omitempty"`
 	// Node ID
-	NId string `json:"@id"`
+	NId string `json:"@id,omitempty"`
 	// The name of the referenced FileObject source of the data.
-	FileObject *FileObject `json:"fileObject"`
+	FileObject ClassRefItem `json:"fileObject,omitempty"`
 	// The name of the reference RecordSet source.
-	FileSet *FileSet `json:"fileSet"`
+	FileSet ClassRefItem `json:"fileSet,omitempty"`
 	// The name of the referenced RecordSet source.
-	RecordSet *RecordSet `json:"recordSet"`
+	RecordSet ClassRefItem `json:"recordSet,omitempty"`
 	// The extraction method from the provided source.
-	Extract Extract `json:"extract"`
+	Extract Extract `json:"extract,omitempty"`
 	// Transformations to apply to data after extraction.
-	Transform Transform `json:"transform"`
+	Transform Transform `json:"transform,omitempty"`
 	// A format to parse data values from text.
-	Format Format `json:"format"`
+	Format Format `json:"format,omitempty"`
 }
 
 func NewDataSource() *DataSource {
@@ -28,11 +28,11 @@ type Format struct{}
 
 type Extract struct {
 	// Extraction method.
-	FileProperty ContentExtractionEnumeration
+	FileProperty string `json:"fileProperty,omitempty"`
 	// Name of the column (field) that contains values.
-	Column string `json:"column"`
+	Column string `json:"column,omitempty"`
 	// A JSON path expression that obtains values.
-	JsonPath string `json:"jsonPath"`
+	JsonPath string `json:"jsonPath,omitempty"`
 }
 
 func NewExtract() *Extract {
@@ -41,11 +41,13 @@ func NewExtract() *Extract {
 
 type Transform struct {
 	// Split data source string on character.
-	Delimiter string `json:"delimiter"`
+	Delimiter string `json:"delimiter,omitempty"`
 	// Apply regex to data source.
-	Regex string `json:"regex"`
+	Regex string `json:"regex,omitempty"`
+	// the path to extract json from.
+	JsonPath string `json:"jsonPath,omitempty"`
 	// A JSON query to evaluate against the data source.
-	JsonQuery string `json:"jsonquery"`
+	JsonQuery string `json:"jsonquery,omitempty"`
 }
 
 func NewTransform() *Transform {

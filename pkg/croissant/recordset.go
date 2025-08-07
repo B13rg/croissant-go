@@ -1,23 +1,27 @@
 // Croissant spec filetypes and relations.
 package croissant
 
-type JSON string
+import "github.com/b13rg/croissant-go/pkg/types"
 
 type RecordSet struct {
 	// Must be RecordSet
 	NType string `json:"@type"`
 	// Node ID
 	NId string `json:"@id"`
+	// Name of the RecordSet
+	Name string `json:"name"`
+	// Description of the RecordSet
+	Description string `json:"description"`
+	// The data types that correspond to all fields in the RecordSet.
+	DataType types.StringOrSlice `json:"dataType"`
+	// One or more Fields that uniquely identify records in the RecordSet.
+	Key ClassRefList `json:"key,omitempty"`
 	// List of data element Fields that appear in the RecordSet.
 	Field []Field `json:"field"`
-	// One or more Fields that uniquely identify records in the RecordSet.
-	Key []string `json:"key,omitempty"`
 	// One or more records that constitute the data of the RecordSet.
-	Data []JSON `json:"data,omitempty"`
+	Data []interface{} `json:"data,omitempty"`
 	// One or more records provided as an example of the RecordSet.
-	Examples []JSON `json:"examples,omitempty"`
-	//
-	Source Source `json:"-"`
+	Examples []interface{} `json:"examples,omitempty"`
 }
 
 func NewRecordSet() *RecordSet {

@@ -54,6 +54,7 @@ var TestCmd = &cobra.Command{
         }
 
         log.Logger.Info().Str("name", ds.Name).Msg("Dataset name")
+        ds.WriteToFile("./out.json")
     },
 }
 ```

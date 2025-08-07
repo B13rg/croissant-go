@@ -157,6 +157,7 @@
         }
 
         log.Logger.Info().Str(&quot;name&quot;, ds.Name).Msg(&quot;Dataset name&quot;)
+        ds.WriteToFile(&quot;./out.json&quot;)
     },
 }
 </code></pre>

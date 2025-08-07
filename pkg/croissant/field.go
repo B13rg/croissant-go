@@ -1,15 +1,23 @@
 // Croissant spec filetypes and relations.
 package croissant
 
+import (
+	"github.com/b13rg/croissant-go/pkg/types"
+)
+
 type Field struct {
-	// Must be field
+	// Must be field.
 	NType string `json:"@type"`
-	// Node ID
+	// Node ID.
 	NId string `json:"@id"`
-	// The source of data for the field.
-	Source Source `json:"source"`
+	// Name of the Field.
+	Name string `json:"name"`
+	// Description of the Field.
+	Description string `json:"description"`
 	// The data types that correspond to the Field.
-	DataType []*DataType `json:"dataType"`
+	DataType types.StringOrSlice `json:"dataType,omitempty"`
+	// The source of data for the field.
+	Source DataSource `json:"source,omitempty"`
 	// If true the Field is a list of DataType values.
 	Repeated bool `json:"repeated,omitempty"`
 	// A property URL that is equivalent to this field
@@ -28,16 +36,4 @@ func NewField() *Field {
 
 type FieldRef struct {
 	Field ClassRefItem `json:"field"`
-}
-
-// Type used to group data sources.
-type Source struct {
-	DataSource ClassRefItem
-	FileObject ClassRefItem
-	FileSet    ClassRefItem
-	RecordSet  ClassRefItem
-}
-
-func NewSource() *Source {
-	return &Source{}
 }

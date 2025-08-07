@@ -3,32 +3,31 @@ package croissant
 
 import (
 	"encoding/json"
-	"os"
 
 	"github.com/b13rg/croissant-go/pkg/types"
+	"github.com/b13rg/croissant-go/pkg/util"
 )
 
 // [Dataset Class](https://docs.mlcommons.org/croissant/docs/croissant-spec.html#dataset-level-information)
 // Based on https://docs.mlcommons.org/croissant/docs/croissant-spec.html#schemaorgdataset
 type DataSet struct {
-	// Must be `schema.org/Dataset`.
-	NType string `json:"@type"`
-	// Node ID
-	NId string `json:"@id"`
-
 	// Required Properties
 
 	// Context alias definitions to make rest of document shorter.
 	Context map[string]interface{} `json:"@context"`
-	// Schema version the croissant file conforms to.
-	ConformsTo string `json:"dct:conformsTo"`
+	// Must be `schema.org/Dataset`.
+	NType string `json:"@type"`
+	// The name of the dataset
+	Name string `json:"name"`
 	// Description of the dataset
 	Description string `json:"description"`
+	// Schema version the croissant file conforms to.
+	ConformsTo string `json:"conformsTo"`
+	// A citation to the dataset itself.
+	CiteAs string `json:"citeAs,omitempty"`
 	// Licenses of the dataset.
 	// Spec suggests using references from https://spdx.org/licenses/.
 	License types.StringOrSlice `json:"license"`
-	// The name of the dataset
-	Name string `json:"name"`
 	// Url of the dataset, usually a webpage.
 	URL string `json:"url"`
 	// One or more Person or Organizations that created the dataset.
@@ -57,16 +56,16 @@ type DataSet struct {
 	// Language of the content of the dataset.
 	InLanguage []string `json:"inLanguage,omitempty"`
 
-	// Modified / Added Properties
+	// Whether the dataset is a live dataset (in-process of being updated).
+	IsLiveDataset bool `json:"isLiveDataset,omitempty"`
 
 	// List of FileObjects and FileSets associated with the dataset.
 	// Modified from schema.org/Dataset.
 	// Required.
 	Distribution Distribution `json:"distribution,omitempty"`
-	// Whether the dataset is a live dataset (in-process of being updated).
-	IsLiveDataset bool `json:"isLiveDataset,omitempty"`
-	// A citation to the dataset itself.
-	CiteAs string `json:"citeAs,omitempty"`
+
+	// List of RecordSets associated with the dataset
+	RecordSets []RecordSet `json:"recordSet"`
 }
 
 func NewDataSet() *DataSet {
@@ -81,7 +80,7 @@ func NewDataSet() *DataSet {
 
 func NewDataSetFromPath(filePath string) (*DataSet, error) {
 	var dataSet DataSet
-	data, err := os.ReadFile(filePath)
+	data, err := util.ReadFile(filePath)
 	if err != nil {
 		return nil, err
 	}
@@ -89,12 +88,19 @@ func NewDataSetFromPath(filePath string) (*DataSet, error) {
 	return &dataSet, json.Unmarshal(data, &dataSet)
 }
 
+func (ds *DataSet) WriteToFile(path string) error {
+	str, err := json.Marshal(ds)
+	if err != nil {
+		return err
+	}
+
+	return util.WriteFile(str, path)
+}
+
 // Type used to group data resource objects together.
 type DistributionItem interface{}
 
-type Distribution struct {
-	Items []DistributionItem
-}
+type Distribution []DistributionItem
 
 func (d *Distribution) UnmarshalJSON(data []byte) error {
 	// distribution can be an object or array of objects
@@ -109,6 +115,8 @@ func (d *Distribution) UnmarshalJSON(data []byte) error {
 		// Single object, treat as one-element array
 		rawItems = []json.RawMessage{data}
 	}
+
+	dist := []DistributionItem{}
 
 	for _, raw := range rawItems {
 		// Peek at @type
@@ -125,13 +133,13 @@ func (d *Distribution) UnmarshalJSON(data []byte) error {
 			if err := json.Unmarshal(raw, &fo); err != nil {
 				return err
 			}
-			d.Items = append(d.Items, fo)
+			dist = append(dist, fo)
 		case "cr:FileSet":
 			var fs FileSet
 			if err := json.Unmarshal(raw, &fs); err != nil {
 				return err
 			}
-			d.Items = append(d.Items, fs)
+			dist = append(dist, fs)
 		default:
 			return types.CroissantError{
 				Message: "unknown @type",
@@ -139,6 +147,8 @@ func (d *Distribution) UnmarshalJSON(data []byte) error {
 			}
 		}
 	}
+
+	*d = dist
 
 	return nil
 }

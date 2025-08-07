@@ -7,16 +7,18 @@ type FileObject struct {
 	// Node ID
 	NId string `json:"@id"`
 	// The name of the file.
-	Name string `json:"sc:name"`
+	Name string `json:"name"`
+	// Description of file.
+	Description string `json:"description"`
 	// URL to the actual bytes of the file object.
-	ContentURL string `json:"sc:contentUrl"`
+	ContentURL string `json:"contentUrl"`
 	// File size in [mega/kilo/...]bytes.
 	// Defaults to bytes if unit not specified.
-	ContentSize string `json:"sc:contentSize"`
+	ContentSize string `json:"contentSize,omitempty"`
 	// Format of the file given as a MIME type.
-	EncodingFormat string `json:"sc:encodingFormat"`
+	EncodingFormat string `json:"encodingFormat"`
 	// Checksum of the file contents.
-	Sha256 string `json:"sc:sha256,omitempty"`
+	Sha256 string `json:"sha256,omitempty"`
 	// Another FileObject or FileSet this resource is contained in.
 	ContainedIn ClassRefList `json:"containedIn,omitempty"`
 }
@@ -43,10 +45,16 @@ type FileSet struct {
 	NType string `json:"@type"`
 	// Node ID
 	NId string `json:"@id"`
+	// Name of FileSet
+	Name string `json:"name"`
+	// Description of FileSet
+	Description string `json:"description"`
 	// The FileSet or FileObject the resource is contained in.
 	ContainedIn ClassRefList `json:"containedIn"`
+	// MIME type
+	EncodingFormat string `json:"encodingFormat"`
 	// A glob pattern of files to include.
-	Includes string `json:"includes,omitempty"`
+	Includes string `json:"includes"`
 	// A glob patter of files to exclude.
 	Excludes string `json:"excludes,omitempty"`
 }
