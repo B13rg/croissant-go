@@ -2,7 +2,10 @@
 package croissant
 
 type DataSource struct {
+	// Must be DataSource
 	NType string `json:"@type"`
+	// Node ID
+	NId string `json:"@id"`
 	// The name of the referenced FileObject source of the data.
 	FileObject *FileObject `json:"fileObject"`
 	// The name of the reference RecordSet source.
@@ -38,11 +41,11 @@ func NewExtract() *Extract {
 
 type Transform struct {
 	// Split data source string on character.
-	Delimiter string
+	Delimiter string `json:"delimiter"`
 	// Apply regex to data source.
-	Regex string
+	Regex string `json:"regex"`
 	// A JSON query to evaluate against the data source.
-	JsonQuery string
+	JsonQuery string `json:"jsonquery"`
 }
 
 func NewTransform() *Transform {

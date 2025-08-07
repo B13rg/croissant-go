@@ -3,7 +3,6 @@ package croissant
 
 import (
 	"encoding/json"
-	"fmt"
 	"os"
 
 	"github.com/b13rg/croissant-go/pkg/types"
@@ -12,12 +11,15 @@ import (
 // [Dataset Class](https://docs.mlcommons.org/croissant/docs/croissant-spec.html#dataset-level-information)
 // Based on https://docs.mlcommons.org/croissant/docs/croissant-spec.html#schemaorgdataset
 type DataSet struct {
+	// Must be `schema.org/Dataset`.
+	NType string `json:"@type"`
+	// Node ID
+	NId string `json:"@id"`
+
 	// Required Properties
 
 	// Context alias definitions to make rest of document shorter.
 	Context map[string]interface{} `json:"@context"`
-	// Must be `schema.org/Dataset`.
-	NType string `json:"@type"`
 	// Schema version the croissant file conforms to.
 	ConformsTo string `json:"dct:conformsTo"`
 	// Description of the dataset
@@ -50,7 +52,7 @@ type DataSet struct {
 	DateModified string `json:"dateModified,omitempty"`
 	// List of URLs that represent the same dataset as this one.
 	SameAs []string `json:"sameAs,omitempty"`
-	// License that applies the the croissant metadata.
+	// License that applies to the croissant metadata.
 	SdLicense []string `json:"sdLicense,omitempty"`
 	// Language of the content of the dataset.
 	InLanguage []string `json:"inLanguage,omitempty"`
@@ -61,7 +63,7 @@ type DataSet struct {
 	// Modified from schema.org/Dataset.
 	// Required.
 	Distribution Distribution `json:"distribution,omitempty"`
-	//Whether the dataset is a live dataset (in-process of being updated).
+	// Whether the dataset is a live dataset (in-process of being updated).
 	IsLiveDataset bool `json:"isLiveDataset,omitempty"`
 	// A citation to the dataset itself.
 	CiteAs string `json:"citeAs,omitempty"`
@@ -77,14 +79,14 @@ func NewDataSet() *DataSet {
 	}
 }
 
-func NewDataSetFromPath(path string) (*DataSet, error) {
-	var ds DataSet
-	data, err := os.ReadFile(path)
+func NewDataSetFromPath(filePath string) (*DataSet, error) {
+	var dataSet DataSet
+	data, err := os.ReadFile(filePath)
 	if err != nil {
 		return nil, err
 	}
 
-	return &ds, json.Unmarshal(data, &ds)
+	return &dataSet, json.Unmarshal(data, &dataSet)
 }
 
 // Type used to group data resource objects together.
@@ -131,9 +133,13 @@ func (d *Distribution) UnmarshalJSON(data []byte) error {
 			}
 			d.Items = append(d.Items, fs)
 		default:
-			return fmt.Errorf("unknown @type: %s", typeProbe.Type)
+			return types.CroissantError{
+				Message: "unknown @type",
+				Value:   typeProbe.Type,
+			}
 		}
 	}
+
 	return nil
 }
 

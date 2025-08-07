@@ -4,6 +4,8 @@ package croissant
 type FileObject struct {
 	// Must be FileObject
 	NType string `json:"@type"`
+	// Node ID
+	NId string `json:"@id"`
 	// The name of the file.
 	Name string `json:"sc:name"`
 	// URL to the actual bytes of the file object.
@@ -31,7 +33,7 @@ func (*FileObject) ValidateHash() error {
 	panic("not implemented")
 }
 
-// Update FileObject struct from resource
+// Update FileObject struct from resource.
 func (*FileObject) Update() error {
 	panic("not implemented")
 }
@@ -39,6 +41,8 @@ func (*FileObject) Update() error {
 type FileSet struct {
 	// Must be FileSet.
 	NType string `json:"@type"`
+	// Node ID
+	NId string `json:"@id"`
 	// The FileSet or FileObject the resource is contained in.
 	ContainedIn ClassRefList `json:"containedIn"`
 	// A glob pattern of files to include.
@@ -55,7 +59,7 @@ func (*FileSet) Validate() error {
 	panic("not implemented")
 }
 
-// Update FileSet struct from resource
+// Update FileSet struct from resource.
 func (*FileSet) Update() error {
 	panic("not implemented")
 }

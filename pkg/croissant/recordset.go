@@ -6,6 +6,8 @@ type JSON string
 type RecordSet struct {
 	// Must be RecordSet
 	NType string `json:"@type"`
+	// Node ID
+	NId string `json:"@id"`
 	// List of data element Fields that appear in the RecordSet.
 	Field []Field `json:"field"`
 	// One or more Fields that uniquely identify records in the RecordSet.

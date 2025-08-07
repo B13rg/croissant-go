@@ -2,7 +2,10 @@
 package croissant
 
 type Field struct {
+	// Must be field
 	NType string `json:"@type"`
+	// Node ID
+	NId string `json:"@id"`
 	// The source of data for the field.
 	Source Source `json:"source"`
 	// The data types that correspond to the Field.
@@ -24,15 +27,15 @@ func NewField() *Field {
 }
 
 type FieldRef struct {
-	Field ClassRefItem `json="field"`
+	Field ClassRefItem `json:"field"`
 }
 
 // Type used to group data sources.
 type Source struct {
-	DataSource *DataSource
-	FileObject *FileObject
-	FileSet    *FileSet
-	RecordSet  *RecordSet
+	DataSource ClassRefItem
+	FileObject ClassRefItem
+	FileSet    ClassRefItem
+	RecordSet  ClassRefItem
 }
 
 func NewSource() *Source {

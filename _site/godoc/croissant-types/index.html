@@ -216,7 +216,7 @@
 <li><a href="#NewContentExtractionEnumeration">func NewContentExtractionEnumeration() *ContentExtractionEnumeration</a></li>
 <li><a href="#DataSet">type DataSet</a></li>
 <li><a href="#NewDataSet">func NewDataSet() *DataSet</a></li>
-<li><a href="#NewDataSetFromPath">func NewDataSetFromPath(path string) (*DataSet, error)</a></li>
+<li><a href="#NewDataSetFromPath">func NewDataSetFromPath(filePath string) (*DataSet, error)</a></li>
 <li><a href="#NewFileSet">func NewFileSet() *DataSet</a></li>
 <li><a href="#DataSource">type DataSource</a></li>
 <li><a href="#NewDataSource">func NewDataSource() *DataSource</a></li>
@@ -298,23 +298,23 @@
 }
 </code></pre>
 <p><a name="ClassRefItem"></a></p>
-<h2 id="type-classrefitem">type <a href="https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/references.go#L8-L10">ClassRefItem</a></h2>
+<h2 id="type-classrefitem">type <a href="https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/references.go#L9-L11">ClassRefItem</a></h2>
 <pre><code class="language-go">type ClassRefItem struct {
-    Id string `json=&quot;@id&quot;`
+    Id string `json:&quot;@id&quot;`
 }
 </code></pre>
 <p><a name="ClassRefList"></a></p>
-<h2 id="type-classreflist">type <a href="https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/references.go#L12-L14">ClassRefList</a></h2>
+<h2 id="type-classreflist">type <a href="https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/references.go#L13-L15">ClassRefList</a></h2>
 <pre><code class="language-go">type ClassRefList struct {
     Items []ClassRefItem
 }
 </code></pre>
 <p><a name="ClassRefList.UnmarshalJSON"></a></p>
-<h3 id="func-classreflist-unmarshaljson">func (*ClassRefList) <a href="https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/references.go#L16">UnmarshalJSON</a></h3>
+<h3 id="func-classreflist-unmarshaljson">func (*ClassRefList) <a href="https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/references.go#L17">UnmarshalJSON</a></h3>
 <pre><code class="language-go">func (ref *ClassRefList) UnmarshalJSON(data []byte) error
 </code></pre>
 <p><a name="ContentExtractionEnumeration"></a></p>
-<h2 id="type-contentextractionenumeration">type <a href="https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/datasource.go#L52-L63">ContentExtractionEnumeration</a></h2>
+<h2 id="type-contentextractionenumeration">type <a href="https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/datasource.go#L55-L66">ContentExtractionEnumeration</a></h2>
 <pre><code class="language-go">type ContentExtractionEnumeration struct {
     // Full path to file, from Croissant extraction or download folders.
     FullPath string
@@ -329,18 +329,20 @@
 }
 </code></pre>
 <p><a name="NewContentExtractionEnumeration"></a></p>
-<h3 id="func-newcontentextractionenumeration">func <a href="https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/datasource.go#L65">NewContentExtractionEnumeration</a></h3>
+<h3 id="func-newcontentextractionenumeration">func <a href="https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/datasource.go#L68">NewContentExtractionEnumeration</a></h3>
 <pre><code class="language-go">func NewContentExtractionEnumeration() *ContentExtractionEnumeration
 </code></pre>
 <p><a name="DataSet"></a></p>
-<h2 id="type-dataset">type <a href="https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/dataset.go#L14-L68">DataSet</a></h2>
+<h2 id="type-dataset">type <a href="https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/dataset.go#L13-L70">DataSet</a></h2>
 <p>[Dataset Class](https://docs.mlcommons.org/croissant/docs/croissant-spec.html#dataset-level-information) Based on https://docs.mlcommons.org/croissant/docs/croissant-spec.html#schemaorgdataset</p>
 <pre><code class="language-go">type DataSet struct {
+    // Must be `schema.org/Dataset`.
+    NType string `json:&quot;@type&quot;`
+    // Node ID
+    NId string `json:&quot;@id&quot;`
 
     // Context alias definitions to make rest of document shorter.
     Context map[string]interface{} `json:&quot;@context&quot;`
-    // Must be `schema.org/Dataset`.
-    NType string `json:&quot;@type&quot;`
     // Schema version the croissant file conforms to.
     ConformsTo string `json:&quot;dct:conformsTo&quot;`
     // Description of the dataset
@@ -371,7 +373,7 @@
     DateModified string `json:&quot;dateModified,omitempty&quot;`
     // List of URLs that represent the same dataset as this one.
     SameAs []string `json:&quot;sameAs,omitempty&quot;`
-    // License that applies the the croissant metadata.
+    // License that applies to the croissant metadata.
     SdLicense []string `json:&quot;sdLicense,omitempty&quot;`
     // Language of the content of the dataset.
     InLanguage []string `json:&quot;inLanguage,omitempty&quot;`
@@ -380,28 +382,31 @@
     // Modified from schema.org/Dataset.
     // Required.
     Distribution Distribution `json:&quot;distribution,omitempty&quot;`
-    //Whether the dataset is a live dataset (in-process of being updated).
+    // Whether the dataset is a live dataset (in-process of being updated).
     IsLiveDataset bool `json:&quot;isLiveDataset,omitempty&quot;`
     // A citation to the dataset itself.
     CiteAs string `json:&quot;citeAs,omitempty&quot;`
 }
 </code></pre>
 <p><a name="NewDataSet"></a></p>
-<h3 id="func-newdataset">func <a href="https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/dataset.go#L70">NewDataSet</a></h3>
+<h3 id="func-newdataset">func <a href="https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/dataset.go#L72">NewDataSet</a></h3>
 <pre><code class="language-go">func NewDataSet() *DataSet
 </code></pre>
 <p><a name="NewDataSetFromPath"></a></p>
-<h3 id="func-newdatasetfrompath">func <a href="https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/dataset.go#L80">NewDataSetFromPath</a></h3>
-<pre><code class="language-go">func NewDataSetFromPath(path string) (*DataSet, error)
+<h3 id="func-newdatasetfrompath">func <a href="https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/dataset.go#L82">NewDataSetFromPath</a></h3>
+<pre><code class="language-go">func NewDataSetFromPath(filePath string) (*DataSet, error)
 </code></pre>
 <p><a name="NewFileSet"></a></p>
-<h3 id="func-newfileset">func <a href="https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/file_resources.go#L50">NewFileSet</a></h3>
+<h3 id="func-newfileset">func <a href="https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/file_resources.go#L54">NewFileSet</a></h3>
 <pre><code class="language-go">func NewFileSet() *DataSet
 </code></pre>
 <p><a name="DataSource"></a></p>
-<h2 id="type-datasource">type <a href="https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/datasource.go#L4-L18">DataSource</a></h2>
+<h2 id="type-datasource">type <a href="https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/datasource.go#L4-L21">DataSource</a></h2>
 <pre><code class="language-go">type DataSource struct {
+    // Must be DataSource
     NType string `json:&quot;@type&quot;`
+    // Node ID
+    NId string `json:&quot;@id&quot;`
     // The name of the referenced FileObject source of the data.
     FileObject *FileObject `json:&quot;fileObject&quot;`
     // The name of the reference RecordSet source.
@@ -417,37 +422,37 @@
 }
 </code></pre>
 <p><a name="NewDataSource"></a></p>
-<h3 id="func-newdatasource">func <a href="https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/datasource.go#L20">NewDataSource</a></h3>
+<h3 id="func-newdatasource">func <a href="https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/datasource.go#L23">NewDataSource</a></h3>
 <pre><code class="language-go">func NewDataSource() *DataSource
 </code></pre>
 <p><a name="DataType"></a></p>
-<h2 id="type-datatype">type <a href="https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/recordset.go#L25-L28">DataType</a></h2>
+<h2 id="type-datatype">type <a href="https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/recordset.go#L27-L30">DataType</a></h2>
 <pre><code class="language-go">type DataType struct {
     // MIME type
     DataType string
 }
 </code></pre>
 <p><a name="NewDataType"></a></p>
-<h3 id="func-newdatatype">func <a href="https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/recordset.go#L30">NewDataType</a></h3>
+<h3 id="func-newdatatype">func <a href="https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/recordset.go#L32">NewDataType</a></h3>
 <pre><code class="language-go">func NewDataType() *DataType
 </code></pre>
 <p><a name="Distribution"></a></p>
-<h2 id="type-distribution">type <a href="https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/dataset.go#L93-L95">Distribution</a></h2>
+<h2 id="type-distribution">type <a href="https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/dataset.go#L95-L97">Distribution</a></h2>
 <pre><code class="language-go">type Distribution struct {
     Items []DistributionItem
 }
 </code></pre>
 <p><a name="Distribution.UnmarshalJSON"></a></p>
-<h3 id="func-distribution-unmarshaljson">func (*Distribution) <a href="https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/dataset.go#L97">UnmarshalJSON</a></h3>
+<h3 id="func-distribution-unmarshaljson">func (*Distribution) <a href="https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/dataset.go#L99">UnmarshalJSON</a></h3>
 <pre><code class="language-go">func (d *Distribution) UnmarshalJSON(data []byte) error
 </code></pre>
 <p><a name="DistributionItem"></a></p>
-<h2 id="type-distributionitem">type <a href="https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/dataset.go#L91">DistributionItem</a></h2>
+<h2 id="type-distributionitem">type <a href="https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/dataset.go#L93">DistributionItem</a></h2>
 <p>Type used to group data resource objects together.</p>
 <pre><code class="language-go">type DistributionItem interface{}
 </code></pre>
 <p><a name="Extract"></a></p>
-<h2 id="type-extract">type <a href="https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/datasource.go#L26-L33">Extract</a></h2>
+<h2 id="type-extract">type <a href="https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/datasource.go#L29-L36">Extract</a></h2>
 <pre><code class="language-go">type Extract struct {
     // Extraction method.
     FileProperty ContentExtractionEnumeration
@@ -458,13 +463,16 @@
 }
 </code></pre>
 <p><a name="NewExtract"></a></p>
-<h3 id="func-newextract">func <a href="https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/datasource.go#L35">NewExtract</a></h3>
+<h3 id="func-newextract">func <a href="https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/datasource.go#L38">NewExtract</a></h3>
 <pre><code class="language-go">func NewExtract() *Extract
 </code></pre>
 <p><a name="Field"></a></p>
-<h2 id="type-field">type <a href="https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/field.go#L4-L20">Field</a></h2>
+<h2 id="type-field">type <a href="https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/field.go#L4-L23">Field</a></h2>
 <pre><code class="language-go">type Field struct {
+    // Must be field
     NType string `json:&quot;@type&quot;`
+    // Node ID
+    NId string `json:&quot;@id&quot;`
     // The source of data for the field.
     Source Source `json:&quot;source&quot;`
     // The data types that correspond to the Field.
@@ -482,20 +490,22 @@
 }
 </code></pre>
 <p><a name="NewField"></a></p>
-<h3 id="func-newfield">func <a href="https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/field.go#L22">NewField</a></h3>
+<h3 id="func-newfield">func <a href="https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/field.go#L25">NewField</a></h3>
 <pre><code class="language-go">func NewField() *Field
 </code></pre>
 <p><a name="FieldRef"></a></p>
-<h2 id="type-fieldref">type <a href="https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/field.go#L26-L28">FieldRef</a></h2>
+<h2 id="type-fieldref">type <a href="https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/field.go#L29-L31">FieldRef</a></h2>
 <pre><code class="language-go">type FieldRef struct {
-    Field ClassRefItem `json=&quot;field&quot;`
+    Field ClassRefItem `json:&quot;field&quot;`
 }
 </code></pre>
 <p><a name="FileObject"></a></p>
-<h2 id="type-fileobject">type <a href="https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/file_resources.go#L4-L20">FileObject</a></h2>
+<h2 id="type-fileobject">type <a href="https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/file_resources.go#L4-L22">FileObject</a></h2>
 <pre><code class="language-go">type FileObject struct {
     // Must be FileObject
     NType string `json:&quot;@type&quot;`
+    // Node ID
+    NId string `json:&quot;@id&quot;`
     // The name of the file.
     Name string `json:&quot;sc:name&quot;`
     // URL to the actual bytes of the file object.
@@ -512,27 +522,29 @@
 }
 </code></pre>
 <p><a name="NewFileObject"></a></p>
-<h3 id="func-newfileobject">func <a href="https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/file_resources.go#L22">NewFileObject</a></h3>
+<h3 id="func-newfileobject">func <a href="https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/file_resources.go#L24">NewFileObject</a></h3>
 <pre><code class="language-go">func NewFileObject() *FileObject
 </code></pre>
 <p><a name="FileObject.Update"></a></p>
-<h3 id="func-fileobject-update">func (*FileObject) <a href="https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/file_resources.go#L35">Update</a></h3>
+<h3 id="func-fileobject-update">func (*FileObject) <a href="https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/file_resources.go#L37">Update</a></h3>
 <pre><code class="language-go">func (*FileObject) Update() error
 </code></pre>
-<p>Update FileObject struct from resource</p>
+<p>Update FileObject struct from resource.</p>
 <p><a name="FileObject.Validate"></a></p>
-<h3 id="func-fileobject-validate">func (*FileObject) <a href="https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/file_resources.go#L26">Validate</a></h3>
+<h3 id="func-fileobject-validate">func (*FileObject) <a href="https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/file_resources.go#L28">Validate</a></h3>
 <pre><code class="language-go">func (*FileObject) Validate() error
 </code></pre>
 <p><a name="FileObject.ValidateHash"></a></p>
-<h3 id="func-fileobject-validatehash">func (*FileObject) <a href="https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/file_resources.go#L30">ValidateHash</a></h3>
+<h3 id="func-fileobject-validatehash">func (*FileObject) <a href="https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/file_resources.go#L32">ValidateHash</a></h3>
 <pre><code class="language-go">func (*FileObject) ValidateHash() error
 </code></pre>
 <p><a name="FileSet"></a></p>
-<h2 id="type-fileset">type <a href="https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/file_resources.go#L39-L48">FileSet</a></h2>
+<h2 id="type-fileset">type <a href="https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/file_resources.go#L41-L52">FileSet</a></h2>
 <pre><code class="language-go">type FileSet struct {
     // Must be FileSet.
     NType string `json:&quot;@type&quot;`
+    // Node ID
+    NId string `json:&quot;@id&quot;`
     // The FileSet or FileObject the resource is contained in.
     ContainedIn ClassRefList `json:&quot;containedIn&quot;`
     // A glob pattern of files to include.
@@ -542,16 +554,16 @@
 }
 </code></pre>
 <p><a name="FileSet.Update"></a></p>
-<h3 id="func-fileset-update">func (*FileSet) <a href="https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/file_resources.go#L59">Update</a></h3>
+<h3 id="func-fileset-update">func (*FileSet) <a href="https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/file_resources.go#L63">Update</a></h3>
 <pre><code class="language-go">func (*FileSet) Update() error
 </code></pre>
-<p>Update FileSet struct from resource</p>
+<p>Update FileSet struct from resource.</p>
 <p><a name="FileSet.Validate"></a></p>
-<h3 id="func-fileset-validate">func (*FileSet) <a href="https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/file_resources.go#L54">Validate</a></h3>
+<h3 id="func-fileset-validate">func (*FileSet) <a href="https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/file_resources.go#L58">Validate</a></h3>
 <pre><code class="language-go">func (*FileSet) Validate() error
 </code></pre>
 <p><a name="Format"></a></p>
-<h2 id="type-format">type <a href="https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/datasource.go#L24">Format</a></h2>
+<h2 id="type-format">type <a href="https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/datasource.go#L27">Format</a></h2>
 <pre><code class="language-go">type Format struct{}
 </code></pre>
 <p><a name="JSON"></a></p>
@@ -559,10 +571,12 @@
 <pre><code class="language-go">type JSON string
 </code></pre>
 <p><a name="RecordSet"></a></p>
-<h2 id="type-recordset">type <a href="https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/recordset.go#L6-L19">RecordSet</a></h2>
+<h2 id="type-recordset">type <a href="https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/recordset.go#L6-L21">RecordSet</a></h2>
 <pre><code class="language-go">type RecordSet struct {
     // Must be RecordSet
     NType string `json:&quot;@type&quot;`
+    // Node ID
+    NId string `json:&quot;@id&quot;`
     // List of data element Fields that appear in the RecordSet.
     Field []Field `json:&quot;field&quot;`
     // One or more Fields that uniquely identify records in the RecordSet.
@@ -576,25 +590,25 @@
 }
 </code></pre>
 <p><a name="NewRecordSet"></a></p>
-<h3 id="func-newrecordset">func <a href="https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/recordset.go#L21">NewRecordSet</a></h3>
+<h3 id="func-newrecordset">func <a href="https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/recordset.go#L23">NewRecordSet</a></h3>
 <pre><code class="language-go">func NewRecordSet() *RecordSet
 </code></pre>
 <p><a name="Source"></a></p>
-<h2 id="type-source">type <a href="https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/field.go#L31-L36">Source</a></h2>
+<h2 id="type-source">type <a href="https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/field.go#L34-L39">Source</a></h2>
 <p>Type used to group data sources.</p>
 <pre><code class="language-go">type Source struct {
-    DataSource *DataSource
-    FileObject *FileObject
-    FileSet    *FileSet
-    RecordSet  *RecordSet
+    DataSource ClassRefItem
+    FileObject ClassRefItem
+    FileSet    ClassRefItem
+    RecordSet  ClassRefItem
 }
 </code></pre>
 <p><a name="NewSource"></a></p>
-<h3 id="func-newsource">func <a href="https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/field.go#L38">NewSource</a></h3>
+<h3 id="func-newsource">func <a href="https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/field.go#L41">NewSource</a></h3>
 <pre><code class="language-go">func NewSource() *Source
 </code></pre>
 <p><a name="Split"></a></p>
-<h2 id="type-split">type <a href="https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/recordset.go#L34-L38">Split</a></h2>
+<h2 id="type-split">type <a href="https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/recordset.go#L36-L40">Split</a></h2>
 <pre><code class="language-go">type Split struct {
     TrainSplit      string
     TestSplit       string
@@ -602,22 +616,22 @@
 }
 </code></pre>
 <p><a name="NewSplit"></a></p>
-<h3 id="func-newsplit">func <a href="https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/recordset.go#L40">NewSplit</a></h3>
+<h3 id="func-newsplit">func <a href="https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/recordset.go#L42">NewSplit</a></h3>
 <pre><code class="language-go">func NewSplit() *Split
 </code></pre>
 <p><a name="Transform"></a></p>
-<h2 id="type-transform">type <a href="https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/datasource.go#L39-L46">Transform</a></h2>
+<h2 id="type-transform">type <a href="https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/datasource.go#L42-L49">Transform</a></h2>
 <pre><code class="language-go">type Transform struct {
     // Split data source string on character.
-    Delimiter string
+    Delimiter string `json:&quot;delimiter&quot;`
     // Apply regex to data source.
-    Regex string
+    Regex string `json:&quot;regex&quot;`
     // A JSON query to evaluate against the data source.
-    JsonQuery string
+    JsonQuery string `json:&quot;jsonquery&quot;`
 }
 </code></pre>
 <p><a name="NewTransform"></a></p>
-<h3 id="func-newtransform">func <a href="https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/datasource.go#L48">NewTransform</a></h3>
+<h3 id="func-newtransform">func <a href="https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/datasource.go#L51">NewTransform</a></h3>
 <pre><code class="language-go">func NewTransform() *Transform
 </code></pre>
               
