@@ -1,30 +1,62 @@
 // Croissant spec filetypes and relations.
 package croissant
 
+// [Dataset Class](https://docs.mlcommons.org/croissant/docs/croissant-spec.html#dataset-level-information)
+// Based on https://docs.mlcommons.org/croissant/docs/croissant-spec.html#schemaorgdataset
 type DataSet struct {
-	Context    map[string]interface{} `json:"@context"`
-	NType      string                 `json:"@type"`
-	ConformsTo string                 `json:"dct:conformsTo"`
+	// Required Properties
 
-	Description   string   `json:"description"`
-	License       []string `json:"license"`
-	Name          string   `json:"name"`
-	URL           string   `json:"url"`
-	Creator       []string `json:"creator"`
-	DatePublished string   `json:"datePublished"`
+	// Context alias definitions to make rest of document shorter.
+	Context map[string]interface{} `json:"@context"`
+	// Must be `schema.org/Dataset`.
+	NType string `json:"@type"`
+	// Schema version the croissant file conforms to.
+	ConformsTo string `json:"dct:conformsTo"`
+	// Description of the dataset
+	Description string `json:"description"`
+	// Licenses of the dataset.
+	// Spec suggests using references from https://spdx.org/licenses/.
+	License []string `json:"license"`
+	// The name of the dataset
+	Name string `json:"name"`
+	// Url of the dataset, usually a webpage.
+	URL string `json:"url"`
+	// One or more Person or Organizations that created the dataset.
+	Creator []string `json:"creator"`
+	// The date the dataset was published.
+	DatePublished string `json:"datePublished"`
 
-	Keywords     []string `json:"keywords,omitempty"`
-	Publisher    []string `json:"publisher,omitempty"`
-	Version      string   `json:"version,omitempty"`
-	DateCreated  string   `json:"dateCreated,omitempty"`
-	DateModified string   `json:"dateModified,omitempty"`
-	SameAs       []string `json:"sameAs,omitempty"`
-	SdLicense    []string `json:"sdLicense,omitempty"`
-	InLanguage   []string `json:"inLanguage,omitempty"`
+	// Recommended Properties
 
-	Distribution  []FileResource `json:"distribution,omitempty"`
-	IsLiveDataset bool           `json:"isLiveDataset,omitempty"`
-	CiteAs        string         `json:"citeAs,omitempty"`
+	// Keywords associated with the text
+	Keywords []string `json:"keywords,omitempty"`
+	// Publisher of the dataset, sometimes distinct from creator.
+	Publisher []string `json:"publisher,omitempty"`
+	// Version of the dataset.
+	// Either an single int, or a MAJOR.MINOR.PATCH sematic version string.
+	// [Semantic Versioning 2.0.0](https://semver.org/spec/v2.0.0.html)
+	Version string `json:"version,omitempty"`
+	// Date the dataset was initially created
+	DateCreated string `json:"dateCreated,omitempty"`
+	// Date the dataset was last modified
+	DateModified string `json:"dateModified,omitempty"`
+	// List of URLs that represent the same dataset as this one.
+	SameAs []string `json:"sameAs,omitempty"`
+	// License that applies the the croissant metadata.
+	SdLicense []string `json:"sdLicense,omitempty"`
+	// Language of the content of the dataset.
+	InLanguage []string `json:"inLanguage,omitempty"`
+
+	// Modified / Added Properties
+
+	// List of FileObjects and FileSets associated with the dataset.
+	// Modified from schema.org/Dataset.
+	// Required.
+	Distribution []FileResource `json:"distribution,omitempty"`
+	//Whether the dataset is a live dataset (in-process of being updated).
+	IsLiveDataset bool `json:"isLiveDataset,omitempty"`
+	// A citation to the dataset itself.
+	CiteAs string `json:"citeAs,omitempty"`
 }
 
 func NewDataSet() *DataSet {

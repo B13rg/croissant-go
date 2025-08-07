@@ -2,13 +2,21 @@
 package croissant
 
 type FileObject struct {
-	NType          string        `json:"@type"`
-	Name           string        `json:"sc:name"`
-	ContentURL     string        `json:"sc:contentUrl"`
-	ContentSize    string        `json:"sc:contentSize"`
-	EncodingFormat string        `json:"sc:encodingFormat"`
-	Sha256         string        `json:"sc:sha256,omitempty"`
-	ContainedIn    *FileResource `json:"containedIn,omitempty"`
+	// Must be FileObject
+	NType string `json:"@type"`
+	// The name of the file.
+	Name string `json:"sc:name"`
+	// URL to the actual bytes of the file object.
+	ContentURL string `json:"sc:contentUrl"`
+	// File size in [mega/kilo/...]bytes.
+	// Defaults to bytes if unit not specified.
+	ContentSize string `json:"sc:contentSize"`
+	// Format of the file given as a MIME type.
+	EncodingFormat string `json:"sc:encodingFormat"`
+	// Checksum of the file contents.
+	Sha256 string `json:"sc:sha256,omitempty"`
+	// Another FileObject or FileSet this resource is contained in.
+	ContainedIn []*FileResource `json:"containedIn,omitempty"`
 }
 
 func NewFileObject() *FileObject {
@@ -23,16 +31,20 @@ func (*FileObject) ValidateHash() error {
 	panic("not implemented")
 }
 
-// Update Fileobject struct from resource
+// Update FileObject struct from resource
 func (*FileObject) Update() error {
 	panic("not implemented")
 }
 
 type FileSet struct {
-	NType       string        `json:"@type"`
-	ContainedIn *FileResource `json:"containedIn"`
-	Includes    string        `json:"includes,omitempty"`
-	Excludes    string        `json:"excludes,omitempty"`
+	// Must be FileSet.
+	NType string `json:"@type"`
+	// The FileSet or FileObject the resource is contained in.
+	ContainedIn []*FileResource `json:"containedIn"`
+	// A glob pattern of files to include.
+	Includes string `json:"includes,omitempty"`
+	// A glob patter of files to exclude.
+	Excludes string `json:"excludes,omitempty"`
 }
 
 func NewFileSet() *DataSet {

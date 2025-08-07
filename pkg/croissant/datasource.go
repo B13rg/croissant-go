@@ -2,13 +2,19 @@
 package croissant
 
 type DataSource struct {
-	NType      string      `json:"@type"`
+	NType string `json:"@type"`
+	// The name of the referenced FileObject source of the data.
 	FileObject *FileObject `json:"fileObject"`
-	FileSet    *FileSet    `json:"fileSet"`
-	RecordSet  *RecordSet  `json:"recordSet"`
-	Extract    Extract     `json:"extract"`
-	Transform  Transform   `json:"transform"`
-	Format     Format      `json:"format"`
+	// The name of the reference RecordSet source.
+	FileSet *FileSet `json:"fileSet"`
+	// The name of the referenced RecordSet source.
+	RecordSet *RecordSet `json:"recordSet"`
+	// The extraction method from the provided source.
+	Extract Extract `json:"extract"`
+	// Transformations to apply to data after extraction.
+	Transform Transform `json:"transform"`
+	// A format to parse data values from text.
+	Format Format `json:"format"`
 }
 
 func NewDataSource() *DataSource {
@@ -18,9 +24,12 @@ func NewDataSource() *DataSource {
 type Format struct{}
 
 type Extract struct {
+	// Extraction method.
 	FileProperty ContentExtractionEnumeration
-	Column       string `json:"column"`
-	JsonPath     string `json:"jsonPath"`
+	// Name of the column (field) that contains values.
+	Column string `json:"column"`
+	// A JSON path expression that obtains values.
+	JsonPath string `json:"jsonPath"`
 }
 
 func NewExtract() *Extract {
@@ -28,8 +37,11 @@ func NewExtract() *Extract {
 }
 
 type Transform struct {
+	// Split data source string on character.
 	Delimiter string
-	Regex     string
+	// Apply regex to data source.
+	Regex string
+	// A JSON query to evaluate against the data source.
 	JsonQuery string
 }
 
@@ -38,10 +50,15 @@ func NewTransform() *Transform {
 }
 
 type ContentExtractionEnumeration struct {
-	FullPath    string
-	Filename    string
-	Content     string
-	Lines       string
+	// Full path to file, from Croissant extraction or download folders.
+	FullPath string
+	// Name of the file (no path).
+	Filename string
+	// Byte content of the file.
+	Content string
+	// Byte content of each line of the file.
+	Lines string
+	// The numbers of each line in the file.
 	LineNumbers string
 }
 
