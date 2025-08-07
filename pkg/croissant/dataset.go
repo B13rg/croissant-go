@@ -1,6 +1,13 @@
 // Croissant spec filetypes and relations.
 package croissant
 
+import (
+	"encoding/json"
+	"os"
+
+	"github.com/b13rg/croissant-go/pkg/types"
+)
+
 // [Dataset Class](https://docs.mlcommons.org/croissant/docs/croissant-spec.html#dataset-level-information)
 // Based on https://docs.mlcommons.org/croissant/docs/croissant-spec.html#schemaorgdataset
 type DataSet struct {
@@ -16,7 +23,7 @@ type DataSet struct {
 	Description string `json:"description"`
 	// Licenses of the dataset.
 	// Spec suggests using references from https://spdx.org/licenses/.
-	License []string `json:"license"`
+	License types.StringOrSlice `json:"license"`
 	// The name of the dataset
 	Name string `json:"name"`
 	// Url of the dataset, usually a webpage.
@@ -67,6 +74,28 @@ func NewDataSet() *DataSet {
 		Description: "",
 		License:     []string{},
 	}
+}
+
+func NewDataSetFromPath(path string) (*DataSet, error) {
+	var ds DataSet
+	data, err := os.ReadFile(path)
+	if err != nil {
+		return nil, err
+	}
+
+	return &ds, json.Unmarshal(data, &ds)
+}
+
+type DistributionItem interface{}
+
+type Distribution struct {
+	Items []DistributionItem
+}
+
+func (s *Distribution) UnmarshalJSON(data []byte) error {
+	// check data @type
+	// unmarshal into struct pointed to by @type
+	return nil
 }
 
 // The suggested context to use in a Croissant Json-LD file.
