@@ -6,6 +6,8 @@ import "github.com/b13rg/croissant-go/cmd"
 
 Defines the cli\-interface commands available to the user.
 
+### Test a croissant file
+
 Output package version info.
 
 ## Index
@@ -31,6 +33,28 @@ var RootCmd = &cobra.Command{
     Use:   "croissant",
     Short: "A cli for Croissant files",
     Long:  `A simple cli for interacting with 🥐 Croissant dataset files.`,
+}
+```
+
+<a name="TestCmd"></a>Test a croissant file.
+
+```go
+var TestCmd = &cobra.Command{
+    Use:   "test path",
+    Short: "Test loading a Croissant file",
+    Long:  `Test loading a Croissant file`,
+    Run: func(cmd *cobra.Command, args []string) {
+        if len(args) != 1 || args[0] == "" {
+            log.Logger.Fatal().Msg("invalid path param")
+        }
+
+        ds, err := croissant.NewDataSetFromPath(args[0])
+        if err != nil {
+            log.Logger.Fatal().AnErr("DatasetFromPath", err).Msg("error loading file")
+        }
+
+        log.Logger.Info().Str("name", ds.Name).Msg("Dataset name")
+    },
 }
 ```
 

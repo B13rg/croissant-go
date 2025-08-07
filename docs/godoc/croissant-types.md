@@ -21,11 +21,15 @@ Croissant spec filetypes and relations.
   - [func NewContentExtractionEnumeration\(\) \*ContentExtractionEnumeration](<#NewContentExtractionEnumeration>)
 - [type DataSet](<#DataSet>)
   - [func NewDataSet\(\) \*DataSet](<#NewDataSet>)
+  - [func NewDataSetFromPath\(path string\) \(\*DataSet, error\)](<#NewDataSetFromPath>)
   - [func NewFileSet\(\) \*DataSet](<#NewFileSet>)
 - [type DataSource](<#DataSource>)
   - [func NewDataSource\(\) \*DataSource](<#NewDataSource>)
 - [type DataType](<#DataType>)
   - [func NewDataType\(\) \*DataType](<#NewDataType>)
+- [type Distribution](<#Distribution>)
+  - [func \(s \*Distribution\) UnmarshalJSON\(data \[\]byte\) error](<#Distribution.UnmarshalJSON>)
+- [type DistributionItem](<#DistributionItem>)
 - [type Extract](<#Extract>)
   - [func NewExtract\(\) \*Extract](<#NewExtract>)
 - [type Field](<#Field>)
@@ -133,7 +137,7 @@ func NewContentExtractionEnumeration() *ContentExtractionEnumeration
 
 
 <a name="DataSet"></a>
-## type [DataSet](<https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/dataset.go#L6-L60>)
+## type [DataSet](<https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/dataset.go#L13-L67>)
 
 \[Dataset Class\]\(https://docs.mlcommons.org/croissant/docs/croissant-spec.html#dataset-level-information\) Based on https://docs.mlcommons.org/croissant/docs/croissant-spec.html#schemaorgdataset
 
@@ -150,7 +154,7 @@ type DataSet struct {
     Description string `json:"description"`
     // Licenses of the dataset.
     // Spec suggests using references from https://spdx.org/licenses/.
-    License []string `json:"license"`
+    License types.StringOrSlice `json:"license"`
     // The name of the dataset
     Name string `json:"name"`
     // Url of the dataset, usually a webpage.
@@ -191,10 +195,19 @@ type DataSet struct {
 ```
 
 <a name="NewDataSet"></a>
-### func [NewDataSet](<https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/dataset.go#L62>)
+### func [NewDataSet](<https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/dataset.go#L69>)
 
 ```go
 func NewDataSet() *DataSet
+```
+
+
+
+<a name="NewDataSetFromPath"></a>
+### func [NewDataSetFromPath](<https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/dataset.go#L79>)
+
+```go
+func NewDataSetFromPath(path string) (*DataSet, error)
 ```
 
 
@@ -260,6 +273,35 @@ func NewDataType() *DataType
 ```
 
 
+
+<a name="Distribution"></a>
+## type [Distribution](<https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/dataset.go#L91-L93>)
+
+
+
+```go
+type Distribution struct {
+    Items []DistributionItem
+}
+```
+
+<a name="Distribution.UnmarshalJSON"></a>
+### func \(\*Distribution\) [UnmarshalJSON](<https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/dataset.go#L95>)
+
+```go
+func (s *Distribution) UnmarshalJSON(data []byte) error
+```
+
+
+
+<a name="DistributionItem"></a>
+## type [DistributionItem](<https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/dataset.go#L89>)
+
+
+
+```go
+type DistributionItem interface{}
+```
 
 <a name="Extract"></a>
 ## type [Extract](<https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/datasource.go#L26-L33>)

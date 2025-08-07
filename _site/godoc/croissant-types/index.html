@@ -74,6 +74,8 @@
         <ul>
     <li class="toctree-l3"><a class="reference internal" href="#func-newdataset">func NewDataSet</a>
     </li>
+    <li class="toctree-l3"><a class="reference internal" href="#func-newdatasetfrompath">func NewDataSetFromPath</a>
+    </li>
     <li class="toctree-l3"><a class="reference internal" href="#func-newfileset">func NewFileSet</a>
     </li>
         </ul>
@@ -89,6 +91,14 @@
     <li class="toctree-l3"><a class="reference internal" href="#func-newdatatype">func NewDataType</a>
     </li>
         </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#type-distribution">type Distribution</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#func-distribution-unmarshaljson">func (*Distribution) UnmarshalJSON</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#type-distributionitem">type DistributionItem</a>
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#type-extract">type Extract</a>
         <ul>
@@ -195,11 +205,15 @@
 <li><a href="#NewContentExtractionEnumeration">func NewContentExtractionEnumeration() *ContentExtractionEnumeration</a></li>
 <li><a href="#DataSet">type DataSet</a></li>
 <li><a href="#NewDataSet">func NewDataSet() *DataSet</a></li>
+<li><a href="#NewDataSetFromPath">func NewDataSetFromPath(path string) (*DataSet, error)</a></li>
 <li><a href="#NewFileSet">func NewFileSet() *DataSet</a></li>
 <li><a href="#DataSource">type DataSource</a></li>
 <li><a href="#NewDataSource">func NewDataSource() *DataSource</a></li>
 <li><a href="#DataType">type DataType</a></li>
 <li><a href="#NewDataType">func NewDataType() *DataType</a></li>
+<li><a href="#Distribution">type Distribution</a></li>
+<li><a href="#Distribution.UnmarshalJSON">func (s *Distribution) UnmarshalJSON(data []byte) error</a></li>
+<li><a href="#DistributionItem">type DistributionItem</a></li>
 <li><a href="#Extract">type Extract</a></li>
 <li><a href="#NewExtract">func NewExtract() *Extract</a></li>
 <li><a href="#Field">type Field</a></li>
@@ -292,7 +306,7 @@
 <pre><code class="language-go">func NewContentExtractionEnumeration() *ContentExtractionEnumeration
 </code></pre>
 <p><a name="DataSet"></a></p>
-<h2 id="type-dataset">type <a href="https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/dataset.go#L6-L60">DataSet</a></h2>
+<h2 id="type-dataset">type <a href="https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/dataset.go#L13-L67">DataSet</a></h2>
 <p>[Dataset Class](https://docs.mlcommons.org/croissant/docs/croissant-spec.html#dataset-level-information) Based on https://docs.mlcommons.org/croissant/docs/croissant-spec.html#schemaorgdataset</p>
 <pre><code class="language-go">type DataSet struct {
 
@@ -306,7 +320,7 @@
     Description string `json:&quot;description&quot;`
     // Licenses of the dataset.
     // Spec suggests using references from https://spdx.org/licenses/.
-    License []string `json:&quot;license&quot;`
+    License types.StringOrSlice `json:&quot;license&quot;`
     // The name of the dataset
     Name string `json:&quot;name&quot;`
     // Url of the dataset, usually a webpage.
@@ -346,8 +360,12 @@
 }
 </code></pre>
 <p><a name="NewDataSet"></a></p>
-<h3 id="func-newdataset">func <a href="https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/dataset.go#L62">NewDataSet</a></h3>
+<h3 id="func-newdataset">func <a href="https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/dataset.go#L69">NewDataSet</a></h3>
 <pre><code class="language-go">func NewDataSet() *DataSet
+</code></pre>
+<p><a name="NewDataSetFromPath"></a></p>
+<h3 id="func-newdatasetfrompath">func <a href="https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/dataset.go#L79">NewDataSetFromPath</a></h3>
+<pre><code class="language-go">func NewDataSetFromPath(path string) (*DataSet, error)
 </code></pre>
 <p><a name="NewFileSet"></a></p>
 <h3 id="func-newfileset">func <a href="https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/file_resources.go#L50">NewFileSet</a></h3>
@@ -385,6 +403,20 @@
 <p><a name="NewDataType"></a></p>
 <h3 id="func-newdatatype">func <a href="https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/recordset.go#L30">NewDataType</a></h3>
 <pre><code class="language-go">func NewDataType() *DataType
+</code></pre>
+<p><a name="Distribution"></a></p>
+<h2 id="type-distribution">type <a href="https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/dataset.go#L91-L93">Distribution</a></h2>
+<pre><code class="language-go">type Distribution struct {
+    Items []DistributionItem
+}
+</code></pre>
+<p><a name="Distribution.UnmarshalJSON"></a></p>
+<h3 id="func-distribution-unmarshaljson">func (*Distribution) <a href="https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/dataset.go#L95">UnmarshalJSON</a></h3>
+<pre><code class="language-go">func (s *Distribution) UnmarshalJSON(data []byte) error
+</code></pre>
+<p><a name="DistributionItem"></a></p>
+<h2 id="type-distributionitem">type <a href="https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/dataset.go#L89">DistributionItem</a></h2>
+<pre><code class="language-go">type DistributionItem interface{}
 </code></pre>
 <p><a name="Extract"></a></p>
 <h2 id="type-extract">type <a href="https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/datasource.go#L26-L33">Extract</a></h2>

@@ -1,19 +1,19 @@
-## croissant version
+## croissant test
 
-Get version
+Test loading a Croissant file
 
 ### Synopsis
 
-Get the current version of tool
+Test loading a Croissant file
 
 ```
-croissant version [flags]
+croissant test path [flags]
 ```
 
 ### Options
 
 ```
-  -h, --help   help for version
+  -h, --help   help for test
 ```
 
 ### Options inherited from parent commands
