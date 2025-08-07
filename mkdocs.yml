@@ -21,6 +21,7 @@ nav:
   - Commands:
     - root: cmd/croissant.md
     - version: cmd/croissant_version.md
+    - test: cmd/croissant_test.md
   - Godocs:
     - version: godoc/croissant-cmd.md
     - types: godoc/croissant-types.md 
