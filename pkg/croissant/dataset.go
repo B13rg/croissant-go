@@ -3,6 +3,7 @@ package croissant
 
 import (
 	"encoding/json"
+	"fmt"
 	"os"
 
 	"github.com/b13rg/croissant-go/pkg/types"
@@ -59,7 +60,7 @@ type DataSet struct {
 	// List of FileObjects and FileSets associated with the dataset.
 	// Modified from schema.org/Dataset.
 	// Required.
-	Distribution []FileResource `json:"distribution,omitempty"`
+	Distribution Distribution `json:"distribution,omitempty"`
 	//Whether the dataset is a live dataset (in-process of being updated).
 	IsLiveDataset bool `json:"isLiveDataset,omitempty"`
 	// A citation to the dataset itself.
@@ -86,15 +87,53 @@ func NewDataSetFromPath(path string) (*DataSet, error) {
 	return &ds, json.Unmarshal(data, &ds)
 }
 
+// Type used to group data resource objects together.
 type DistributionItem interface{}
 
 type Distribution struct {
 	Items []DistributionItem
 }
 
-func (s *Distribution) UnmarshalJSON(data []byte) error {
-	// check data @type
-	// unmarshal into struct pointed to by @type
+func (d *Distribution) UnmarshalJSON(data []byte) error {
+	// distribution can be an object or array of objects
+	var rawItems []json.RawMessage
+
+	if data[0] == '[' {
+		// It's an array
+		if err := json.Unmarshal(data, &rawItems); err != nil {
+			return err
+		}
+	} else {
+		// Single object, treat as one-element array
+		rawItems = []json.RawMessage{data}
+	}
+
+	for _, raw := range rawItems {
+		// Peek at @type
+		var typeProbe struct {
+			Type string `json:"@type"`
+		}
+		if err := json.Unmarshal(raw, &typeProbe); err != nil {
+			return err
+		}
+
+		switch typeProbe.Type {
+		case "cr:FileObject":
+			var fo FileObject
+			if err := json.Unmarshal(raw, &fo); err != nil {
+				return err
+			}
+			d.Items = append(d.Items, fo)
+		case "cr:FileSet":
+			var fs FileSet
+			if err := json.Unmarshal(raw, &fs); err != nil {
+				return err
+			}
+			d.Items = append(d.Items, fs)
+		default:
+			return fmt.Errorf("unknown @type: %s", typeProbe.Type)
+		}
+	}
 	return nil
 }
 

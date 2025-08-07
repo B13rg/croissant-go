@@ -12,15 +12,19 @@ type Field struct {
 	// A property URL that is equivalent to this field
 	EquivalentProperty string `json:"equivalentProperty,omitempty"`
 	// References to other fields in a different RecordSet.
-	References []*Field `json:"references,omitempty"`
+	References ClassRefList `json:"references,omitempty"`
 	// List of Fields nested inside this one.
 	SubField []Field `json:"subField,omitempty"`
 	// References to other Fields in the same RecordSet.
-	ParentField []*Field `json:"parentField,omitempty"`
+	ParentField ClassRefList `json:"parentField,omitempty"`
 }
 
 func NewField() *Field {
 	return &Field{}
+}
+
+type FieldRef struct {
+	Field ClassRefItem `json="field"`
 }
 
 // Type used to group data sources.

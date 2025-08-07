@@ -17,6 +17,9 @@ Croissant spec filetypes and relations.
 ## Index
 
 - [Variables](<#variables>)
+- [type ClassRefItem](<#ClassRefItem>)
+- [type ClassRefList](<#ClassRefList>)
+  - [func \(ref \*ClassRefList\) UnmarshalJSON\(data \[\]byte\) error](<#ClassRefList.UnmarshalJSON>)
 - [type ContentExtractionEnumeration](<#ContentExtractionEnumeration>)
   - [func NewContentExtractionEnumeration\(\) \*ContentExtractionEnumeration](<#NewContentExtractionEnumeration>)
 - [type DataSet](<#DataSet>)
@@ -28,18 +31,18 @@ Croissant spec filetypes and relations.
 - [type DataType](<#DataType>)
   - [func NewDataType\(\) \*DataType](<#NewDataType>)
 - [type Distribution](<#Distribution>)
-  - [func \(s \*Distribution\) UnmarshalJSON\(data \[\]byte\) error](<#Distribution.UnmarshalJSON>)
+  - [func \(d \*Distribution\) UnmarshalJSON\(data \[\]byte\) error](<#Distribution.UnmarshalJSON>)
 - [type DistributionItem](<#DistributionItem>)
 - [type Extract](<#Extract>)
   - [func NewExtract\(\) \*Extract](<#NewExtract>)
 - [type Field](<#Field>)
   - [func NewField\(\) \*Field](<#NewField>)
+- [type FieldRef](<#FieldRef>)
 - [type FileObject](<#FileObject>)
   - [func NewFileObject\(\) \*FileObject](<#NewFileObject>)
   - [func \(\*FileObject\) Update\(\) error](<#FileObject.Update>)
   - [func \(\*FileObject\) Validate\(\) error](<#FileObject.Validate>)
   - [func \(\*FileObject\) ValidateHash\(\) error](<#FileObject.ValidateHash>)
-- [type FileResource](<#FileResource>)
 - [type FileSet](<#FileSet>)
   - [func \(\*FileSet\) Update\(\) error](<#FileSet.Update>)
   - [func \(\*FileSet\) Validate\(\) error](<#FileSet.Validate>)
@@ -107,6 +110,37 @@ var SuggestedContext = map[string]interface{}{
 }
 ```
 
+<a name="ClassRefItem"></a>
+## type [ClassRefItem](<https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/references.go#L8-L10>)
+
+
+
+```go
+type ClassRefItem struct {
+    Id string `json="@id"`
+}
+```
+
+<a name="ClassRefList"></a>
+## type [ClassRefList](<https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/references.go#L12-L14>)
+
+
+
+```go
+type ClassRefList struct {
+    Items []ClassRefItem
+}
+```
+
+<a name="ClassRefList.UnmarshalJSON"></a>
+### func \(\*ClassRefList\) [UnmarshalJSON](<https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/references.go#L16>)
+
+```go
+func (ref *ClassRefList) UnmarshalJSON(data []byte) error
+```
+
+
+
 <a name="ContentExtractionEnumeration"></a>
 ## type [ContentExtractionEnumeration](<https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/datasource.go#L52-L63>)
 
@@ -137,7 +171,7 @@ func NewContentExtractionEnumeration() *ContentExtractionEnumeration
 
 
 <a name="DataSet"></a>
-## type [DataSet](<https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/dataset.go#L13-L67>)
+## type [DataSet](<https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/dataset.go#L14-L68>)
 
 \[Dataset Class\]\(https://docs.mlcommons.org/croissant/docs/croissant-spec.html#dataset-level-information\) Based on https://docs.mlcommons.org/croissant/docs/croissant-spec.html#schemaorgdataset
 
@@ -186,7 +220,7 @@ type DataSet struct {
     // List of FileObjects and FileSets associated with the dataset.
     // Modified from schema.org/Dataset.
     // Required.
-    Distribution []FileResource `json:"distribution,omitempty"`
+    Distribution Distribution `json:"distribution,omitempty"`
     //Whether the dataset is a live dataset (in-process of being updated).
     IsLiveDataset bool `json:"isLiveDataset,omitempty"`
     // A citation to the dataset itself.
@@ -195,7 +229,7 @@ type DataSet struct {
 ```
 
 <a name="NewDataSet"></a>
-### func [NewDataSet](<https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/dataset.go#L69>)
+### func [NewDataSet](<https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/dataset.go#L70>)
 
 ```go
 func NewDataSet() *DataSet
@@ -204,7 +238,7 @@ func NewDataSet() *DataSet
 
 
 <a name="NewDataSetFromPath"></a>
-### func [NewDataSetFromPath](<https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/dataset.go#L79>)
+### func [NewDataSetFromPath](<https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/dataset.go#L80>)
 
 ```go
 func NewDataSetFromPath(path string) (*DataSet, error)
@@ -275,7 +309,7 @@ func NewDataType() *DataType
 
 
 <a name="Distribution"></a>
-## type [Distribution](<https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/dataset.go#L91-L93>)
+## type [Distribution](<https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/dataset.go#L93-L95>)
 
 
 
@@ -286,18 +320,18 @@ type Distribution struct {
 ```
 
 <a name="Distribution.UnmarshalJSON"></a>
-### func \(\*Distribution\) [UnmarshalJSON](<https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/dataset.go#L95>)
+### func \(\*Distribution\) [UnmarshalJSON](<https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/dataset.go#L97>)
 
 ```go
-func (s *Distribution) UnmarshalJSON(data []byte) error
+func (d *Distribution) UnmarshalJSON(data []byte) error
 ```
 
 
 
 <a name="DistributionItem"></a>
-## type [DistributionItem](<https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/dataset.go#L89>)
+## type [DistributionItem](<https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/dataset.go#L91>)
 
-
+Type used to group data resource objects together.
 
 ```go
 type DistributionItem interface{}
@@ -345,11 +379,11 @@ type Field struct {
     // A property URL that is equivalent to this field
     EquivalentProperty string `json:"equivalentProperty,omitempty"`
     // References to other fields in a different RecordSet.
-    References []*Field `json:"references,omitempty"`
+    References ClassRefList `json:"references,omitempty"`
     // List of Fields nested inside this one.
     SubField []Field `json:"subField,omitempty"`
     // References to other Fields in the same RecordSet.
-    ParentField []*Field `json:"parentField,omitempty"`
+    ParentField ClassRefList `json:"parentField,omitempty"`
 }
 ```
 
@@ -361,6 +395,17 @@ func NewField() *Field
 ```
 
 
+
+<a name="FieldRef"></a>
+## type [FieldRef](<https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/field.go#L26-L28>)
+
+
+
+```go
+type FieldRef struct {
+    Field ClassRefItem `json="field"`
+}
+```
 
 <a name="FileObject"></a>
 ## type [FileObject](<https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/file_resources.go#L4-L20>)
@@ -383,7 +428,7 @@ type FileObject struct {
     // Checksum of the file contents.
     Sha256 string `json:"sc:sha256,omitempty"`
     // Another FileObject or FileSet this resource is contained in.
-    ContainedIn []*FileResource `json:"containedIn,omitempty"`
+    ContainedIn ClassRefList `json:"containedIn,omitempty"`
 }
 ```
 
@@ -423,18 +468,6 @@ func (*FileObject) ValidateHash() error
 
 
 
-<a name="FileResource"></a>
-## type [FileResource](<https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/file_resources.go#L64-L67>)
-
-Type used to group data resource objects together.
-
-```go
-type FileResource interface {
-    Validate() error
-    Update() error
-}
-```
-
 <a name="FileSet"></a>
 ## type [FileSet](<https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/file_resources.go#L39-L48>)
 
@@ -445,7 +478,7 @@ type FileSet struct {
     // Must be FileSet.
     NType string `json:"@type"`
     // The FileSet or FileObject the resource is contained in.
-    ContainedIn []*FileResource `json:"containedIn"`
+    ContainedIn ClassRefList `json:"containedIn"`
     // A glob pattern of files to include.
     Includes string `json:"includes,omitempty"`
     // A glob patter of files to exclude.
@@ -521,7 +554,7 @@ func NewRecordSet() *RecordSet
 
 
 <a name="Source"></a>
-## type [Source](<https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/field.go#L27-L32>)
+## type [Source](<https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/field.go#L31-L36>)
 
 Type used to group data sources.
 
@@ -535,7 +568,7 @@ type Source struct {
 ```
 
 <a name="NewSource"></a>
-### func [NewSource](<https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/field.go#L34>)
+### func [NewSource](<https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/field.go#L38>)
 
 ```go
 func NewSource() *Source

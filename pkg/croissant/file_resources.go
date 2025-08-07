@@ -16,7 +16,7 @@ type FileObject struct {
 	// Checksum of the file contents.
 	Sha256 string `json:"sc:sha256,omitempty"`
 	// Another FileObject or FileSet this resource is contained in.
-	ContainedIn []*FileResource `json:"containedIn,omitempty"`
+	ContainedIn ClassRefList `json:"containedIn,omitempty"`
 }
 
 func NewFileObject() *FileObject {
@@ -40,7 +40,7 @@ type FileSet struct {
 	// Must be FileSet.
 	NType string `json:"@type"`
 	// The FileSet or FileObject the resource is contained in.
-	ContainedIn []*FileResource `json:"containedIn"`
+	ContainedIn ClassRefList `json:"containedIn"`
 	// A glob pattern of files to include.
 	Includes string `json:"includes,omitempty"`
 	// A glob patter of files to exclude.
@@ -58,10 +58,4 @@ func (*FileSet) Validate() error {
 // Update FileSet struct from resource
 func (*FileSet) Update() error {
 	panic("not implemented")
-}
-
-// Type used to group data resource objects together.
-type FileResource interface {
-	Validate() error
-	Update() error
 }
