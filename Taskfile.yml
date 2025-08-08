@@ -79,4 +79,4 @@ tasks:
   sync-datasets:
     desc: Sync datasets with local croissant repo
     cmds:
-      - cp -r ../croissant/datasets/* ./test/croissant
+      - cp -r ../croissant/datasets/* ./pkg/croissant/testdata/croissant
