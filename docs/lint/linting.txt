@@ -1,10 +1,11 @@
-pkg/croissant/dataset.go:72:10          exhaustruct  croissant.DataSet is missing fields Name, CiteAs, URL, Creator, DatePublished, Keywords, Publisher, Version, DateCreated, DateModified, SameAs, SdLicense, InLanguage, IsLiveDataset, Distribution, RecordSets
+pkg/croissant/dataset.go:82:1           cyclop       calculated cyclomatic complexity for function Validate is 16, max is 10
+pkg/croissant/dataset.go:73:10          exhaustruct  croissant.DataSet is missing fields Name, CiteAs, URL, Creator, DatePublished, Keywords, Publisher, Version, DateCreated, DateModified, SameAs, SdLicense, InLanguage, IsLiveDataset, Distribution, RecordSets
 pkg/croissant/datasource.go:24:10       exhaustruct  croissant.DataSource is missing fields NType, ClassRefItem, FileObject, FileSet, RecordSet, Extract, Transform, Format
 pkg/croissant/datasource.go:39:10       exhaustruct  croissant.Extract is missing fields FileProperty, Column, JsonPath
 pkg/croissant/datasource.go:54:10       exhaustruct  croissant.Transform is missing fields Delimiter, Regex, JsonPath, JsonQuery
 pkg/croissant/datasource.go:71:10       exhaustruct  croissant.ContentExtractionEnumeration is missing fields FullPath, Filename, Content, Lines, LineNumbers
 pkg/croissant/field.go:36:10            exhaustruct  croissant.Field is missing fields NType, ClassRefItem, Name, Description, DataType, Source, Repeated, EquivalentProperty, References, SubField, ParentField
-pkg/croissant/file_resources.go:89:10   exhaustruct  croissant.FileObject is missing fields NType, ClassRefItem, Name, Description, ContentURL, ContentSize, EncodingFormat, Sha256, ContainedIn
-pkg/croissant/file_resources.go:125:10  exhaustruct  croissant.DataSet is missing fields Context, NType, Name, Description, ConformsTo, CiteAs, License, URL, Creator, DatePublished, Keywords, Publisher, Version, DateCreated, DateModified, SameAs, SdLicense, InLanguage, IsLiveDataset, Distribution, RecordSets
+pkg/croissant/file_resources.go:88:10   exhaustruct  croissant.FileObject is missing fields NType, ClassRefItem, Name, Description, ContentURL, ContentSize, EncodingFormat, Sha256, ContainedIn
+pkg/croissant/file_resources.go:172:10  exhaustruct  croissant.DataSet is missing fields Context, NType, Name, Description, ConformsTo, CiteAs, License, URL, Creator, DatePublished, Keywords, Publisher, Version, DateCreated, DateModified, SameAs, SdLicense, InLanguage, IsLiveDataset, Distribution, RecordSets
 pkg/croissant/recordset.go:28:10        exhaustruct  croissant.RecordSet is missing fields NType, ClassRefItem, Name, Description, DataType, Key, Field, Data, Examples
-pkg/croissant/recordset.go:47:10        exhaustruct  croissant.Split is missing fields TrainSplit, TestSplit, ValidationSplit
+pkg/croissant/recordset.go:79:10        exhaustruct  croissant.Split is missing fields TrainSplit, TestSplit, ValidationSplit

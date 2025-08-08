@@ -41,6 +41,9 @@ func (ref StringOrSlice) MarshalJSON() ([]byte, error) {
 	}
 }
 
+// Error type for containing Croissant warnings.
+//
+//nolint:errname
 type CroissantWarning struct {
 	// Message to show the user.
 	Message string

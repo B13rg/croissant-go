@@ -79,7 +79,7 @@ func NewDataSet() *DataSet {
 	}
 }
 
-func (ds DataSet) Validate() ([]types.CroissantWarning, []types.CroissantError) {
+func (ds *DataSet) Validate() ([]types.CroissantWarning, []types.CroissantError) {
 	listWarn := []types.CroissantWarning{}
 	listError := []types.CroissantError{}
 
@@ -166,8 +166,9 @@ func (ds DataSet) Validate() ([]types.CroissantWarning, []types.CroissantError) 
 	if cErr != nil {
 		listError = append(listError, *cErr)
 	}
-	if match == false {
+	if !match {
 		// https://semver.org/#is-there-a-suggested-regular-expression-regex-to-check-a-semver-string
+		//nolint:lll
 		semanticVer := "^(0|[1-9]\\d*)\\.(0|[1-9]\\d*)\\.(0|[1-9]\\d*)(?:-((?:0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\\.(?:0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\\+([0-9a-zA-Z-]+(?:\\.[0-9a-zA-Z-]+)*))?$"
 		match, err = regexp.MatchString(semanticVer, ds.Version)
 		cErr := util.ErrorIfCheck("error parsing version string", err)
@@ -175,7 +176,7 @@ func (ds DataSet) Validate() ([]types.CroissantWarning, []types.CroissantError) 
 			listError = append(listError, *cErr)
 		}
 	}
-	if match == false {
+	if !match {
 		listWarn = append(listWarn,
 			types.CroissantWarning{
 				Message: "issue parsing dataset version as int or SemVer",
