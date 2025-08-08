@@ -1,5 +1,5 @@
 # https://www.mkdocs.org/user-guide/configuration/
-site_name: 🥐 croissant-go Docs
+site_name: 🥐 croissant-go docs
 site_description: "Documentation for the 🥐 croissant-go tool"
 site_author: B13rg
 theme:

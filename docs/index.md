@@ -1,1 +1,3 @@
-# croissant-go Docs
+# 🥐 croissant-go docs
+
+- [Repo Readme](./README-repo.md)
