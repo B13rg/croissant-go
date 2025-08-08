@@ -8,7 +8,7 @@ import (
 
 type ClassRefItem struct {
 	// ID of the resource.
-	Id string `json:"@id,omitempty"`
+	ID string `json:"@id,omitempty"`
 }
 
 type ClassRefList []ClassRefItem

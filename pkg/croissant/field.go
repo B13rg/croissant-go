@@ -9,7 +9,7 @@ import (
 
 type Field struct {
 	// Must be field.
-	NType string `json:"@type"`
+	Type string `json:"@type"`
 	// Node ID.
 	ClassRefItem
 	// Name of the Field.
@@ -44,7 +44,7 @@ func (obj *Field) Validate() ([]types.CroissantWarning, []types.CroissantError) 
 		listWarn = append(listWarn,
 			types.CroissantWarning{
 				Message: "field Name should be set",
-				Value:   obj.Id,
+				Value:   obj.ID,
 			},
 		)
 	}
@@ -52,7 +52,7 @@ func (obj *Field) Validate() ([]types.CroissantWarning, []types.CroissantError) 
 		listWarn = append(listWarn,
 			types.CroissantWarning{
 				Message: "field description should be set",
-				Value:   obj.Id,
+				Value:   obj.ID,
 			},
 		)
 	}
@@ -60,7 +60,7 @@ func (obj *Field) Validate() ([]types.CroissantWarning, []types.CroissantError) 
 		listWarn = append(listWarn,
 			types.CroissantWarning{
 				Message: "field dataType should be set",
-				Value:   obj.Id,
+				Value:   obj.ID,
 			},
 		)
 	}
@@ -68,7 +68,7 @@ func (obj *Field) Validate() ([]types.CroissantWarning, []types.CroissantError) 
 		listWarn = append(listWarn,
 			types.CroissantWarning{
 				Message: "field source should be set",
-				Value:   obj.Id,
+				Value:   obj.ID,
 			},
 		)
 	}

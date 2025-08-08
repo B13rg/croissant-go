@@ -66,7 +66,7 @@ func (d *Distribution) UnmarshalJSON(data []byte) error {
 
 type FileObject struct {
 	// Must be FileObject
-	NType string `json:"@type"`
+	Type string `json:"@type"`
 	// Node ID.
 	ClassRefItem
 	// The name of the file.
@@ -98,7 +98,7 @@ func (obj *FileObject) Validate() ([]types.CroissantWarning, []types.CroissantEr
 		listError = append(listError,
 			types.CroissantError{
 				Message: "resource name must be set",
-				Value:   obj.Id,
+				Value:   obj.ID,
 			},
 		)
 	}
@@ -107,7 +107,7 @@ func (obj *FileObject) Validate() ([]types.CroissantWarning, []types.CroissantEr
 		listError = append(listError,
 			types.CroissantError{
 				Message: "resource contentURL must be set",
-				Value:   obj.Id,
+				Value:   obj.ID,
 			},
 		)
 	}
@@ -116,7 +116,7 @@ func (obj *FileObject) Validate() ([]types.CroissantWarning, []types.CroissantEr
 		listWarn = append(listWarn,
 			types.CroissantWarning{
 				Message: "resource contentSize should be set",
-				Value:   obj.Id,
+				Value:   obj.ID,
 			},
 		)
 	}
@@ -125,7 +125,7 @@ func (obj *FileObject) Validate() ([]types.CroissantWarning, []types.CroissantEr
 		listWarn = append(listWarn,
 			types.CroissantWarning{
 				Message: "resource encodingFormat should be set",
-				Value:   obj.Id,
+				Value:   obj.ID,
 			},
 		)
 	}
@@ -134,7 +134,7 @@ func (obj *FileObject) Validate() ([]types.CroissantWarning, []types.CroissantEr
 		listWarn = append(listWarn,
 			types.CroissantWarning{
 				Message: "resource sha256 should be set",
-				Value:   obj.Id,
+				Value:   obj.ID,
 			},
 		)
 	}
@@ -153,7 +153,7 @@ func (*FileObject) Update() error {
 
 type FileSet struct {
 	// Must be FileSet.
-	NType string `json:"@type"`
+	Type string `json:"@type"`
 	// Node ID
 	ClassRefItem
 	// Name of FileSet
@@ -180,7 +180,7 @@ func (obj *FileSet) Validate() ([]types.CroissantWarning, []types.CroissantError
 		listWarn = append(listWarn,
 			types.CroissantWarning{
 				Message: "resource name should be set",
-				Value:   obj.Id,
+				Value:   obj.ID,
 			},
 		)
 	}
@@ -188,7 +188,7 @@ func (obj *FileSet) Validate() ([]types.CroissantWarning, []types.CroissantError
 		listWarn = append(listWarn,
 			types.CroissantWarning{
 				Message: "resource description should be set",
-				Value:   obj.Id,
+				Value:   obj.ID,
 			},
 		)
 	}
@@ -196,7 +196,7 @@ func (obj *FileSet) Validate() ([]types.CroissantWarning, []types.CroissantError
 		listWarn = append(listWarn,
 			types.CroissantWarning{
 				Message: "resource encodingFormat should be set",
-				Value:   obj.Id,
+				Value:   obj.ID,
 			},
 		)
 	}

@@ -318,7 +318,7 @@
 <h2 id="type-classrefitem">type <a href="https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/references.go#L9-L12">ClassRefItem</a></h2>
 <pre><code class="language-go">type ClassRefItem struct {
     // ID of the resource.
-    Id string `json:&quot;@id,omitempty&quot;`
+    ID string `json:&quot;@id,omitempty&quot;`
 }
 </code></pre>
 <p><a name="ClassRefList"></a></p>
@@ -360,7 +360,7 @@
     // Context alias definitions to make rest of document shorter.
     Context map[string]interface{} `json:&quot;@context&quot;`
     // Must be `schema.org/Dataset`.
-    NType string `json:&quot;@type&quot;`
+    Type string `json:&quot;@type&quot;`
     // The name of the dataset
     Name string `json:&quot;name&quot;`
     // Description of the dataset
@@ -500,7 +500,7 @@
 <h2 id="type-field">type <a href="https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/field.go#L10-L33">Field</a></h2>
 <pre><code class="language-go">type Field struct {
     // Must be field.
-    NType string `json:&quot;@type&quot;`
+    Type string `json:&quot;@type&quot;`
     // Node ID.
     ClassRefItem
     // Name of the Field.
@@ -553,7 +553,7 @@
 <h2 id="type-fileobject">type <a href="https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/file_resources.go#L67-L87">FileObject</a></h2>
 <pre><code class="language-go">type FileObject struct {
     // Must be FileObject
-    NType string `json:&quot;@type&quot;`
+    Type string `json:&quot;@type&quot;`
     // Node ID.
     ClassRefItem
     // The name of the file.
@@ -594,7 +594,7 @@
 <h2 id="type-fileset">type <a href="https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/file_resources.go#L154-L171">FileSet</a></h2>
 <pre><code class="language-go">type FileSet struct {
     // Must be FileSet.
-    NType string `json:&quot;@type&quot;`
+    Type string `json:&quot;@type&quot;`
     // Node ID
     ClassRefItem
     // Name of FileSet
@@ -628,7 +628,7 @@
 <h2 id="type-recordset">type <a href="https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/recordset.go#L6-L25">RecordSet</a></h2>
 <pre><code class="language-go">type RecordSet struct {
     // Must be RecordSet
-    NType string `json:&quot;@type&quot;`
+    Type string `json:&quot;@type&quot;`
     // Node ID
     ClassRefItem
     // Name of the RecordSet

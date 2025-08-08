@@ -17,7 +17,7 @@ type DataSet struct {
 	// Context alias definitions to make rest of document shorter.
 	Context map[string]interface{} `json:"@context"`
 	// Must be `schema.org/Dataset`.
-	NType string `json:"@type"`
+	Type string `json:"@type"`
 	// The name of the dataset
 	Name string `json:"name"`
 	// Description of the dataset
@@ -72,7 +72,7 @@ type DataSet struct {
 func NewDataSet() *DataSet {
 	return &DataSet{
 		Context:     SuggestedContext,
-		NType:       "sc:DataSet",
+		Type:        "sc:DataSet",
 		ConformsTo:  "http://mlcommons.org/croissant/1.0",
 		Description: "",
 		License:     []string{},
@@ -84,11 +84,11 @@ func (ds *DataSet) Validate() ([]types.CroissantWarning, []types.CroissantError)
 	listError := []types.CroissantError{}
 
 	// Required Parameters
-	if ds.NType != "schema.org/Dataset" {
+	if ds.Type != "schema.org/Dataset" {
 		listError = append(listError,
 			types.CroissantError{
 				Message: "@type must be schema.org/Dataset",
-				Value:   ds.NType,
+				Value:   ds.Type,
 			},
 		)
 	}

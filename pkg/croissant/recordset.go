@@ -5,7 +5,7 @@ import "github.com/b13rg/croissant-go/pkg/types"
 
 type RecordSet struct {
 	// Must be RecordSet
-	NType string `json:"@type"`
+	Type string `json:"@type"`
 	// Node ID
 	ClassRefItem
 	// Name of the RecordSet
@@ -36,7 +36,7 @@ func (obj *RecordSet) Validate() ([]types.CroissantWarning, []types.CroissantErr
 		listWarn = append(listWarn,
 			types.CroissantWarning{
 				Message: "recordSet Name should be set",
-				Value:   obj.Id,
+				Value:   obj.ID,
 			},
 		)
 	}
@@ -44,7 +44,7 @@ func (obj *RecordSet) Validate() ([]types.CroissantWarning, []types.CroissantErr
 		listWarn = append(listWarn,
 			types.CroissantWarning{
 				Message: "recordSet description should be set",
-				Value:   obj.Id,
+				Value:   obj.ID,
 			},
 		)
 	}
@@ -52,7 +52,7 @@ func (obj *RecordSet) Validate() ([]types.CroissantWarning, []types.CroissantErr
 		listWarn = append(listWarn,
 			types.CroissantWarning{
 				Message: "recordSet specifies no Fields",
-				Value:   obj.Id,
+				Value:   obj.ID,
 			},
 		)
 	}

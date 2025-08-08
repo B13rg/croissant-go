@@ -123,7 +123,7 @@ var SuggestedContext = map[string]interface{}{
 ```go
 type ClassRefItem struct {
     // ID of the resource.
-    Id string `json:"@id,omitempty"`
+    ID string `json:"@id,omitempty"`
 }
 ```
 
@@ -194,7 +194,7 @@ type DataSet struct {
     // Context alias definitions to make rest of document shorter.
     Context map[string]interface{} `json:"@context"`
     // Must be `schema.org/Dataset`.
-    NType string `json:"@type"`
+    Type string `json:"@type"`
     // The name of the dataset
     Name string `json:"name"`
     // Description of the dataset
@@ -408,7 +408,7 @@ func NewExtract() *Extract
 ```go
 type Field struct {
     // Must be field.
-    NType string `json:"@type"`
+    Type string `json:"@type"`
     // Node ID.
     ClassRefItem
     // Name of the Field.
@@ -496,7 +496,7 @@ func (ref *FieldRefSlice) UnmarshalJSON(data []byte) error
 ```go
 type FileObject struct {
     // Must be FileObject
-    NType string `json:"@type"`
+    Type string `json:"@type"`
     // Node ID.
     ClassRefItem
     // The name of the file.
@@ -561,7 +561,7 @@ func (*FileObject) ValidateHash() error
 ```go
 type FileSet struct {
     // Must be FileSet.
-    NType string `json:"@type"`
+    Type string `json:"@type"`
     // Node ID
     ClassRefItem
     // Name of FileSet
@@ -614,7 +614,7 @@ type Format struct{}
 ```go
 type RecordSet struct {
     // Must be RecordSet
-    NType string `json:"@type"`
+    Type string `json:"@type"`
     // Node ID
     ClassRefItem
     // Name of the RecordSet
