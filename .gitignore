@@ -40,3 +40,4 @@ profiling
 
 croissant-go
 _site/lint
+out.json

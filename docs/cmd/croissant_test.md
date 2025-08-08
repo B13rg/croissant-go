@@ -1,10 +1,10 @@
 ## croissant test
 
-Test loading a Croissant file
+Test loading and validating a Croissant file
 
 ### Synopsis
 
-Test loading a Croissant file
+Test loading and validating a Croissant file
 
 ```
 croissant test path [flags]

@@ -7,7 +7,6 @@ A lightweight Go library for working with the Croissant data format, designed to
 <p>
 
 - [🥐 croissant-go](#-croissant-go)
-  - [Key Features](#key-features)
   - [Technical Overview](#technical-overview)
   - [Installation](#installation)
     - [Getting Started](#getting-started)
@@ -23,10 +22,6 @@ A lightweight Go library for working with the Croissant data format, designed to
 
 </p>
 </details>
-
-## Key Features
-
-Work-in-Progress.
 
 ## Technical Overview
 
@@ -44,7 +39,7 @@ go build ./...
 
 See available commands:
 
-```
+```sh
 croissant-go help
 ```
 
@@ -83,19 +78,19 @@ func loadFile(path string) error {
 
 Install `go-task`:
 
-```
+```sh
 brew install go-task
 ```
 
 Setup dependencies:
 
-```
+```sh
 task setup
 ```
 
 ### Tests
 
-```
+```sh
 task test
 ```
 

@@ -144,8 +144,8 @@
 <p><a name="TestCmd"></a>Test a croissant file.</p>
 <pre><code class="language-go">var TestCmd = &amp;cobra.Command{
     Use:   &quot;test path&quot;,
-    Short: &quot;Test loading a Croissant file&quot;,
-    Long:  `Test loading a Croissant file`,
+    Short: &quot;Test loading and validating a Croissant file&quot;,
+    Long:  `Test loading and validating a Croissant file`,
     Run: func(cmd *cobra.Command, args []string) {
         if len(args) != 1 || args[0] == &quot;&quot; {
             log.Logger.Fatal().Msg(&quot;invalid path param&quot;)
@@ -157,6 +157,15 @@
         }
 
         log.Logger.Info().Str(&quot;name&quot;, dataSet.Name).Msg(&quot;Dataset name&quot;)
+
+        listWarn, listErr := dataSet.Validate()
+        for _, w := range listWarn {
+            log.Logger.Warn().AnErr(&quot;validate&quot;, w)
+        }
+        for _, e := range listErr {
+            log.Logger.Error().AnErr(&quot;validate&quot;, e)
+        }
+
         err = dataSet.WriteToFile(&quot;./out.json&quot;)
         if err != nil {
             log.Logger.Error().AnErr(&quot;Marshalling&quot;, err).Msg(&quot;err&quot;)
