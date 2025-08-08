@@ -8,9 +8,8 @@ import (
 )
 
 // Type used to group data resource objects together.
-type DistributionItem interface{}
-
 type Distribution []DistributionItem
+type DistributionItem interface{}
 
 func (d *Distribution) UnmarshalJSON(data []byte) error {
 	// distribution can be an object or array of objects
@@ -89,8 +88,56 @@ func NewFileObject() *FileObject {
 	return &FileObject{}
 }
 
-func (*FileObject) Validate() error {
-	panic("not implemented")
+func (obj *FileObject) Validate() ([]types.CroissantWarning, []types.CroissantError) {
+	listWarn := []types.CroissantWarning{}
+	listError := []types.CroissantError{}
+
+	if obj.Name == "" {
+		listError = append(listError,
+			types.CroissantError{
+				Message: "resource name must be set",
+				Value:   obj.Id,
+			},
+		)
+	}
+
+	if obj.ContentURL == "" {
+		listError = append(listError,
+			types.CroissantError{
+				Message: "resource contentURL must be set",
+				Value:   obj.Id,
+			},
+		)
+	}
+
+	if obj.ContentSize == "" {
+		listWarn = append(listWarn,
+			types.CroissantWarning{
+				Message: "resource contentSize should be set",
+				Value:   obj.Id,
+			},
+		)
+	}
+
+	if obj.EncodingFormat == "" {
+		listWarn = append(listWarn,
+			types.CroissantWarning{
+				Message: "resource encodingFormat should be set",
+				Value:   obj.Id,
+			},
+		)
+	}
+
+	if obj.Sha256 == "" {
+		listWarn = append(listWarn,
+			types.CroissantWarning{
+				Message: "resource sha256 should be set",
+				Value:   obj.Id,
+			},
+		)
+	}
+
+	return listWarn, listError
 }
 
 func (*FileObject) ValidateHash() error {
@@ -125,8 +172,34 @@ func NewFileSet() *DataSet {
 	return &DataSet{}
 }
 
-func (*FileSet) Validate() error {
-	panic("not implemented")
+func (obj *FileSet) Validate() ([]types.CroissantWarning, []types.CroissantError) {
+	listWarn := []types.CroissantWarning{}
+	if obj.Name == "" {
+		listWarn = append(listWarn,
+			types.CroissantWarning{
+				Message: "resource name should be set",
+				Value:   obj.Id,
+			},
+		)
+	}
+	if obj.Description == "" {
+		listWarn = append(listWarn,
+			types.CroissantWarning{
+				Message: "resource description should be set",
+				Value:   obj.Id,
+			},
+		)
+	}
+	if obj.EncodingFormat == "" {
+		listWarn = append(listWarn,
+			types.CroissantWarning{
+				Message: "resource encodingFormat should be set",
+				Value:   obj.Id,
+			},
+		)
+	}
+
+	return listWarn, []types.CroissantError{}
 }
 
 // Update FileSet struct from resource.

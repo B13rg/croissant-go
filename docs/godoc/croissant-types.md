@@ -27,6 +27,7 @@ Croissant spec filetypes and relations.
   - [func NewDataSet\(\) \*DataSet](<#NewDataSet>)
   - [func NewDataSetFromPath\(filePath string\) \(\*DataSet, error\)](<#NewDataSetFromPath>)
   - [func NewFileSet\(\) \*DataSet](<#NewFileSet>)
+  - [func \(ds DataSet\) Validate\(\) \(\[\]types.CroissantWarning, \[\]types.CroissantError\)](<#DataSet.Validate>)
   - [func \(ds \*DataSet\) WriteToFile\(path string\) error](<#DataSet.WriteToFile>)
 - [type DataSource](<#DataSource>)
   - [func NewDataSource\(\) \*DataSource](<#NewDataSource>)
@@ -39,6 +40,7 @@ Croissant spec filetypes and relations.
   - [func NewExtract\(\) \*Extract](<#NewExtract>)
 - [type Field](<#Field>)
   - [func NewField\(\) \*Field](<#NewField>)
+  - [func \(obj \*Field\) Validate\(\) \(\[\]types.CroissantWarning, \[\]types.CroissantError\)](<#Field.Validate>)
 - [type FieldRef](<#FieldRef>)
 - [type FieldRefSlice](<#FieldRefSlice>)
   - [func \(ref FieldRefSlice\) MarshalJSON\(\) \(\[\]byte, error\)](<#FieldRefSlice.MarshalJSON>)
@@ -46,14 +48,15 @@ Croissant spec filetypes and relations.
 - [type FileObject](<#FileObject>)
   - [func NewFileObject\(\) \*FileObject](<#NewFileObject>)
   - [func \(\*FileObject\) Update\(\) error](<#FileObject.Update>)
-  - [func \(\*FileObject\) Validate\(\) error](<#FileObject.Validate>)
+  - [func \(obj \*FileObject\) Validate\(\) \(\[\]types.CroissantWarning, \[\]types.CroissantError\)](<#FileObject.Validate>)
   - [func \(\*FileObject\) ValidateHash\(\) error](<#FileObject.ValidateHash>)
 - [type FileSet](<#FileSet>)
   - [func \(\*FileSet\) Update\(\) error](<#FileSet.Update>)
-  - [func \(\*FileSet\) Validate\(\) error](<#FileSet.Validate>)
+  - [func \(obj \*FileSet\) Validate\(\) \(\[\]types.CroissantWarning, \[\]types.CroissantError\)](<#FileSet.Validate>)
 - [type Format](<#Format>)
 - [type RecordSet](<#RecordSet>)
   - [func NewRecordSet\(\) \*RecordSet](<#NewRecordSet>)
+  - [func \(obj \*RecordSet\) Validate\(\) \(\[\]types.CroissantWarning, \[\]types.CroissantError\)](<#RecordSet.Validate>)
 - [type Split](<#Split>)
   - [func NewSplit\(\) \*Split](<#NewSplit>)
 - [type Transform](<#Transform>)
@@ -181,7 +184,7 @@ func NewContentExtractionEnumeration() *ContentExtractionEnumeration
 
 
 <a name="DataSet"></a>
-## type [DataSet](<https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/dataset.go#L13-L69>)
+## type [DataSet](<https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/dataset.go#L14-L70>)
 
 \[Dataset Class\]\(https://docs.mlcommons.org/croissant/docs/croissant-spec.html#dataset-level-information\) Based on https://docs.mlcommons.org/croissant/docs/croissant-spec.html#schemaorgdataset
 
@@ -243,7 +246,7 @@ type DataSet struct {
 ```
 
 <a name="NewDataSet"></a>
-### func [NewDataSet](<https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/dataset.go#L71>)
+### func [NewDataSet](<https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/dataset.go#L72>)
 
 ```go
 func NewDataSet() *DataSet
@@ -252,7 +255,7 @@ func NewDataSet() *DataSet
 
 
 <a name="NewDataSetFromPath"></a>
-### func [NewDataSetFromPath](<https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/dataset.go#L81>)
+### func [NewDataSetFromPath](<https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/dataset.go#L208>)
 
 ```go
 func NewDataSetFromPath(filePath string) (*DataSet, error)
@@ -261,7 +264,7 @@ func NewDataSetFromPath(filePath string) (*DataSet, error)
 
 
 <a name="NewFileSet"></a>
-### func [NewFileSet](<https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/file_resources.go#L124>)
+### func [NewFileSet](<https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/file_resources.go#L171>)
 
 ```go
 func NewFileSet() *DataSet
@@ -269,8 +272,17 @@ func NewFileSet() *DataSet
 
 
 
+<a name="DataSet.Validate"></a>
+### func \(DataSet\) [Validate](<https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/dataset.go#L82>)
+
+```go
+func (ds DataSet) Validate() ([]types.CroissantWarning, []types.CroissantError)
+```
+
+
+
 <a name="DataSet.WriteToFile"></a>
-### func \(\*DataSet\) [WriteToFile](<https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/dataset.go#L91>)
+### func \(\*DataSet\) [WriteToFile](<https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/dataset.go#L218>)
 
 ```go
 func (ds *DataSet) WriteToFile(path string) error
@@ -314,7 +326,7 @@ func NewDataSource() *DataSource
 
 
 <a name="DataType"></a>
-## type [DataType](<https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/recordset.go#L31-L34>)
+## type [DataType](<https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/recordset.go#L63-L66>)
 
 
 
@@ -326,7 +338,7 @@ type DataType struct {
 ```
 
 <a name="NewDataType"></a>
-### func [NewDataType](<https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/recordset.go#L36>)
+### func [NewDataType](<https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/recordset.go#L68>)
 
 ```go
 func NewDataType(mimeType string) *DataType
@@ -335,16 +347,16 @@ func NewDataType(mimeType string) *DataType
 
 
 <a name="Distribution"></a>
-## type [Distribution](<https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/file_resources.go#L13>)
+## type [Distribution](<https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/file_resources.go#L11>)
 
-
+Type used to group data resource objects together.
 
 ```go
 type Distribution []DistributionItem
 ```
 
 <a name="Distribution.UnmarshalJSON"></a>
-### func \(\*Distribution\) [UnmarshalJSON](<https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/file_resources.go#L15>)
+### func \(\*Distribution\) [UnmarshalJSON](<https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/file_resources.go#L14>)
 
 ```go
 func (d *Distribution) UnmarshalJSON(data []byte) error
@@ -353,9 +365,9 @@ func (d *Distribution) UnmarshalJSON(data []byte) error
 
 
 <a name="DistributionItem"></a>
-## type [DistributionItem](<https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/file_resources.go#L11>)
+## type [DistributionItem](<https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/file_resources.go#L12>)
 
-Type used to group data resource objects together.
+
 
 ```go
 type DistributionItem interface{}
@@ -427,8 +439,17 @@ func NewField() *Field
 
 
 
+<a name="Field.Validate"></a>
+### func \(\*Field\) [Validate](<https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/field.go#L39>)
+
+```go
+func (obj *Field) Validate() ([]types.CroissantWarning, []types.CroissantError)
+```
+
+
+
 <a name="FieldRef"></a>
-## type [FieldRef](<https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/field.go#L39-L41>)
+## type [FieldRef](<https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/field.go#L86-L88>)
 
 
 
@@ -439,7 +460,7 @@ type FieldRef struct {
 ```
 
 <a name="FieldRefSlice"></a>
-## type [FieldRefSlice](<https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/field.go#L43>)
+## type [FieldRefSlice](<https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/field.go#L90>)
 
 
 
@@ -448,7 +469,7 @@ type FieldRefSlice []FieldRef
 ```
 
 <a name="FieldRefSlice.MarshalJSON"></a>
-### func \(FieldRefSlice\) [MarshalJSON](<https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/field.go#L67>)
+### func \(FieldRefSlice\) [MarshalJSON](<https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/field.go#L114>)
 
 ```go
 func (ref FieldRefSlice) MarshalJSON() ([]byte, error)
@@ -457,7 +478,7 @@ func (ref FieldRefSlice) MarshalJSON() ([]byte, error)
 
 
 <a name="FieldRefSlice.UnmarshalJSON"></a>
-### func \(\*FieldRefSlice\) [UnmarshalJSON](<https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/field.go#L45>)
+### func \(\*FieldRefSlice\) [UnmarshalJSON](<https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/field.go#L92>)
 
 ```go
 func (ref *FieldRefSlice) UnmarshalJSON(data []byte) error
@@ -466,7 +487,7 @@ func (ref *FieldRefSlice) UnmarshalJSON(data []byte) error
 
 
 <a name="FileObject"></a>
-## type [FileObject](<https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/file_resources.go#L66-L86>)
+## type [FileObject](<https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/file_resources.go#L65-L85>)
 
 
 
@@ -495,7 +516,7 @@ type FileObject struct {
 ```
 
 <a name="NewFileObject"></a>
-### func [NewFileObject](<https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/file_resources.go#L88>)
+### func [NewFileObject](<https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/file_resources.go#L87>)
 
 ```go
 func NewFileObject() *FileObject
@@ -504,7 +525,7 @@ func NewFileObject() *FileObject
 
 
 <a name="FileObject.Update"></a>
-### func \(\*FileObject\) [Update](<https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/file_resources.go#L101>)
+### func \(\*FileObject\) [Update](<https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/file_resources.go#L148>)
 
 ```go
 func (*FileObject) Update() error
@@ -513,16 +534,16 @@ func (*FileObject) Update() error
 Update FileObject struct from resource.
 
 <a name="FileObject.Validate"></a>
-### func \(\*FileObject\) [Validate](<https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/file_resources.go#L92>)
+### func \(\*FileObject\) [Validate](<https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/file_resources.go#L91>)
 
 ```go
-func (*FileObject) Validate() error
+func (obj *FileObject) Validate() ([]types.CroissantWarning, []types.CroissantError)
 ```
 
 
 
 <a name="FileObject.ValidateHash"></a>
-### func \(\*FileObject\) [ValidateHash](<https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/file_resources.go#L96>)
+### func \(\*FileObject\) [ValidateHash](<https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/file_resources.go#L143>)
 
 ```go
 func (*FileObject) ValidateHash() error
@@ -531,7 +552,7 @@ func (*FileObject) ValidateHash() error
 
 
 <a name="FileSet"></a>
-## type [FileSet](<https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/file_resources.go#L105-L122>)
+## type [FileSet](<https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/file_resources.go#L152-L169>)
 
 
 
@@ -557,7 +578,7 @@ type FileSet struct {
 ```
 
 <a name="FileSet.Update"></a>
-### func \(\*FileSet\) [Update](<https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/file_resources.go#L133>)
+### func \(\*FileSet\) [Update](<https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/file_resources.go#L206>)
 
 ```go
 func (*FileSet) Update() error
@@ -566,10 +587,10 @@ func (*FileSet) Update() error
 Update FileSet struct from resource.
 
 <a name="FileSet.Validate"></a>
-### func \(\*FileSet\) [Validate](<https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/file_resources.go#L128>)
+### func \(\*FileSet\) [Validate](<https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/file_resources.go#L175>)
 
 ```go
-func (*FileSet) Validate() error
+func (obj *FileSet) Validate() ([]types.CroissantWarning, []types.CroissantError)
 ```
 
 
@@ -620,8 +641,17 @@ func NewRecordSet() *RecordSet
 
 
 
+<a name="RecordSet.Validate"></a>
+### func \(\*RecordSet\) [Validate](<https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/recordset.go#L31>)
+
+```go
+func (obj *RecordSet) Validate() ([]types.CroissantWarning, []types.CroissantError)
+```
+
+
+
 <a name="Split"></a>
-## type [Split](<https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/recordset.go#L40-L44>)
+## type [Split](<https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/recordset.go#L72-L76>)
 
 
 
@@ -634,7 +664,7 @@ type Split struct {
 ```
 
 <a name="NewSplit"></a>
-### func [NewSplit](<https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/recordset.go#L46>)
+### func [NewSplit](<https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/recordset.go#L78>)
 
 ```go
 func NewSplit() *Split

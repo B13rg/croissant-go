@@ -41,6 +41,17 @@ func (ref StringOrSlice) MarshalJSON() ([]byte, error) {
 	}
 }
 
+type CroissantWarning struct {
+	// Message to show the user.
+	Message string
+	// Value to include with message
+	Value any
+}
+
+func (e CroissantWarning) Error() string {
+	return fmt.Sprintf("%s: %v", e.Message, e.Value)
+}
+
 type CroissantError struct {
 	// Message to show the user.
 	Message string

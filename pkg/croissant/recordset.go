@@ -28,6 +28,38 @@ func NewRecordSet() *RecordSet {
 	return &RecordSet{}
 }
 
+func (obj *RecordSet) Validate() ([]types.CroissantWarning, []types.CroissantError) {
+	listWarn := []types.CroissantWarning{}
+	listError := []types.CroissantError{}
+
+	if obj.Name == "" {
+		listWarn = append(listWarn,
+			types.CroissantWarning{
+				Message: "recordSet Name should be set",
+				Value:   obj.Id,
+			},
+		)
+	}
+	if obj.Description == "" {
+		listWarn = append(listWarn,
+			types.CroissantWarning{
+				Message: "recordSet description should be set",
+				Value:   obj.Id,
+			},
+		)
+	}
+	if len(obj.Field) == 0 {
+		listWarn = append(listWarn,
+			types.CroissantWarning{
+				Message: "recordSet specifies no Fields",
+				Value:   obj.Id,
+			},
+		)
+	}
+
+	return listWarn, listError
+}
+
 type DataType struct {
 	// MIME type
 	DataType string

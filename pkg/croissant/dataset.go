@@ -3,6 +3,7 @@ package croissant
 
 import (
 	"encoding/json"
+	"regexp"
 
 	"github.com/b13rg/croissant-go/pkg/types"
 	"github.com/b13rg/croissant-go/pkg/util"
@@ -76,6 +77,132 @@ func NewDataSet() *DataSet {
 		Description: "",
 		License:     []string{},
 	}
+}
+
+func (ds DataSet) Validate() ([]types.CroissantWarning, []types.CroissantError) {
+	listWarn := []types.CroissantWarning{}
+	listError := []types.CroissantError{}
+
+	// Required Parameters
+	if ds.NType != "schema.org/Dataset" {
+		listError = append(listError,
+			types.CroissantError{
+				Message: "@type must be schema.org/Dataset",
+				Value:   ds.NType,
+			},
+		)
+	}
+
+	if ds.ConformsTo != "http://mlcommons.org/croissant/1.0" &&
+		ds.ConformsTo != "http://mlcommons.org/croissant/1.1" {
+		listError = append(listError,
+			types.CroissantError{
+				Message: "conformsTo must be http://mlcommons.org/croissant/1.[0,1]",
+				Value:   ds.ConformsTo,
+			},
+		)
+	}
+
+	if ds.Description == "" {
+		listError = append(listError,
+			types.CroissantError{
+				Message: "dataset description should be set",
+				Value:   "",
+			},
+		)
+	}
+
+	if len(ds.License) == 0 {
+		listError = append(listError,
+			types.CroissantError{
+				Message: "dataset license should be set",
+				Value:   "",
+			},
+		)
+	}
+
+	if ds.Name == "" {
+		listError = append(listError,
+			types.CroissantError{
+				Message: "dataset name should be set",
+				Value:   "",
+			},
+		)
+	}
+
+	if ds.URL == "" {
+		listError = append(listError,
+			types.CroissantError{
+				Message: "dataset name should be set",
+				Value:   "",
+			},
+		)
+	}
+
+	if len(ds.Creator) == 0 {
+		listError = append(listError,
+			types.CroissantError{
+				Message: "dataset creator should be set",
+				Value:   "",
+			},
+		)
+	}
+
+	if ds.DatePublished == "" {
+		listError = append(listError,
+			types.CroissantError{
+				Message: "dataset datePublished should be set",
+				Value:   "",
+			},
+		)
+	}
+
+	// Recommended Parameters
+
+	// Start by checking for a plain num version.
+	intVer := "^\\d+$"
+	match, err := regexp.MatchString(intVer, ds.Version)
+	cErr := util.ErrorIfCheck("error parsing version string", err)
+	if cErr != nil {
+		listError = append(listError, *cErr)
+	}
+	if match == false {
+		// https://semver.org/#is-there-a-suggested-regular-expression-regex-to-check-a-semver-string
+		semanticVer := "^(0|[1-9]\\d*)\\.(0|[1-9]\\d*)\\.(0|[1-9]\\d*)(?:-((?:0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\\.(?:0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\\+([0-9a-zA-Z-]+(?:\\.[0-9a-zA-Z-]+)*))?$"
+		match, err = regexp.MatchString(semanticVer, ds.Version)
+		cErr := util.ErrorIfCheck("error parsing version string", err)
+		if cErr != nil {
+			listError = append(listError, *cErr)
+		}
+	}
+	if match == false {
+		listWarn = append(listWarn,
+			types.CroissantWarning{
+				Message: "issue parsing dataset version as int or SemVer",
+				Value:   ds.Version,
+			},
+		)
+	}
+
+	if len(ds.Distribution) == 0 {
+		listWarn = append(listWarn,
+			types.CroissantWarning{
+				Message: "dataset distribution empty",
+				Value:   "",
+			},
+		)
+	}
+
+	if len(ds.RecordSets) == 0 {
+		listWarn = append(listWarn,
+			types.CroissantWarning{
+				Message: "dataset recordSets empty",
+				Value:   "",
+			},
+		)
+	}
+
+	return listWarn, listError
 }
 
 func NewDataSetFromPath(filePath string) (*DataSet, error) {

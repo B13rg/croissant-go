@@ -36,6 +36,53 @@ func NewField() *Field {
 	return &Field{}
 }
 
+func (obj *Field) Validate() ([]types.CroissantWarning, []types.CroissantError) {
+	listWarn := []types.CroissantWarning{}
+	listError := []types.CroissantError{}
+
+	if obj.Name == "" {
+		listWarn = append(listWarn,
+			types.CroissantWarning{
+				Message: "field Name should be set",
+				Value:   obj.Id,
+			},
+		)
+	}
+	if obj.Description == "" {
+		listWarn = append(listWarn,
+			types.CroissantWarning{
+				Message: "field description should be set",
+				Value:   obj.Id,
+			},
+		)
+	}
+	if len(obj.DataType) == 0 {
+		listWarn = append(listWarn,
+			types.CroissantWarning{
+				Message: "field dataType should be set",
+				Value:   obj.Id,
+			},
+		)
+	}
+	if obj.Source == nil {
+		listWarn = append(listWarn,
+			types.CroissantWarning{
+				Message: "field source should be set",
+				Value:   obj.Id,
+			},
+		)
+	}
+
+	// Validate nested subfields
+	for _, field := range obj.SubField {
+		fWarn, fErr := field.Validate()
+		listWarn = append(listWarn, fWarn...)
+		listError = append(listError, fErr...)
+	}
+
+	return listWarn, listError
+}
+
 type FieldRef struct {
 	Field ClassRefItem `json:"field"`
 }

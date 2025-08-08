@@ -2,6 +2,8 @@ package util
 
 import (
 	"compress/gzip"
+	"crypto/sha256"
+	"encoding/base64"
 	"io"
 	"os"
 	"path/filepath"
@@ -90,4 +92,20 @@ func ReadGzip(filename string) ([]byte, error) {
 	}
 
 	return data, nil
+}
+
+// Calculate the sha256 hash and returns the base64 encoded result.
+func HashFile(path string) (string, error) {
+	file, err := os.Open(filepath.Clean(path))
+	if err != nil {
+		return "", err
+	}
+	defer file.Close()
+
+	hashBox := sha256.New()
+	if _, err := io.Copy(hashBox, file); err != nil {
+		return "", err
+	}
+
+	return base64.RawStdEncoding.EncodeToString(hashBox.Sum(nil)), nil
 }
