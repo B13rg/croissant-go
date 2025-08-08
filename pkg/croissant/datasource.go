@@ -3,21 +3,21 @@ package croissant
 
 type DataSource struct {
 	// Must be DataSource
-	NType string `json:"@type,omitempty"`
+	NType *string `json:"@type,omitempty"`
 	// Node ID
-	NId string `json:"@id,omitempty"`
+	ClassRefItem
 	// The name of the referenced FileObject source of the data.
-	FileObject ClassRefItem `json:"fileObject,omitempty"`
+	FileObject *ClassRefItem `json:"fileObject,omitempty"`
 	// The name of the reference RecordSet source.
-	FileSet ClassRefItem `json:"fileSet,omitempty"`
+	FileSet *ClassRefItem `json:"fileSet,omitempty"`
 	// The name of the referenced RecordSet source.
-	RecordSet ClassRefItem `json:"recordSet,omitempty"`
+	RecordSet *ClassRefItem `json:"recordSet,omitempty"`
 	// The extraction method from the provided source.
-	Extract Extract `json:"extract,omitempty"`
+	Extract *Extract `json:"extract,omitempty"`
 	// Transformations to apply to data after extraction.
-	Transform Transform `json:"transform,omitempty"`
+	Transform *Transform `json:"transform,omitempty"`
 	// A format to parse data values from text.
-	Format Format `json:"format,omitempty"`
+	Format *Format `json:"format,omitempty"`
 }
 
 func NewDataSource() *DataSource {

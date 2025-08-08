@@ -7,7 +7,7 @@ type RecordSet struct {
 	// Must be RecordSet
 	NType string `json:"@type"`
 	// Node ID
-	NId string `json:"@id"`
+	ClassRefItem
 	// Name of the RecordSet
 	Name string `json:"name"`
 	// Description of the RecordSet
@@ -33,8 +33,8 @@ type DataType struct {
 	DataType string
 }
 
-func NewDataType() *DataType {
-	return &DataType{}
+func NewDataType(mimeType string) *DataType {
+	return &DataType{DataType: mimeType}
 }
 
 type Split struct {

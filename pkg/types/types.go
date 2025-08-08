@@ -30,6 +30,17 @@ func (s *StringOrSlice) UnmarshalJSON(data []byte) error {
 	}
 }
 
+func (ref StringOrSlice) MarshalJSON() ([]byte, error) {
+	switch len(ref) {
+	case 0:
+		return []byte("{}"), nil
+	case 1:
+		return json.Marshal(ref[0])
+	default:
+		return json.Marshal(ref)
+	}
+}
+
 type CroissantError struct {
 	// Message to show the user.
 	Message string

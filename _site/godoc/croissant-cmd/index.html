@@ -151,13 +151,16 @@
             log.Logger.Fatal().Msg(&quot;invalid path param&quot;)
         }
 
-        ds, err := croissant.NewDataSetFromPath(args[0])
+        dataSet, err := croissant.NewDataSetFromPath(args[0])
         if err != nil {
             log.Logger.Fatal().AnErr(&quot;DatasetFromPath&quot;, err).Msg(&quot;error loading file&quot;)
         }
 
-        log.Logger.Info().Str(&quot;name&quot;, ds.Name).Msg(&quot;Dataset name&quot;)
-        ds.WriteToFile(&quot;./out.json&quot;)
+        log.Logger.Info().Str(&quot;name&quot;, dataSet.Name).Msg(&quot;Dataset name&quot;)
+        err = dataSet.WriteToFile(&quot;./out.json&quot;)
+        if err != nil {
+            log.Logger.Error().AnErr(&quot;Marshalling&quot;, err).Msg(&quot;err&quot;)
+        }
     },
 }
 </code></pre>

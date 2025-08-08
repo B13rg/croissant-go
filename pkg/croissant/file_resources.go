@@ -1,11 +1,73 @@
 // Croissant spec filetypes and relations.
 package croissant
 
+import (
+	"encoding/json"
+
+	"github.com/b13rg/croissant-go/pkg/types"
+)
+
+// Type used to group data resource objects together.
+type DistributionItem interface{}
+
+type Distribution []DistributionItem
+
+func (d *Distribution) UnmarshalJSON(data []byte) error {
+	// distribution can be an object or array of objects
+	var rawItems []json.RawMessage
+
+	if data[0] == '[' {
+		// It's an array
+		if err := json.Unmarshal(data, &rawItems); err != nil {
+			return err
+		}
+	} else {
+		// Single object, treat as one-element array
+		rawItems = []json.RawMessage{data}
+	}
+
+	dist := []DistributionItem{}
+
+	for _, raw := range rawItems {
+		// Peek at @type
+		var typeProbe struct {
+			Type string `json:"@type"`
+		}
+		if err := json.Unmarshal(raw, &typeProbe); err != nil {
+			return err
+		}
+
+		switch typeProbe.Type {
+		case "cr:FileObject":
+			var fo FileObject
+			if err := json.Unmarshal(raw, &fo); err != nil {
+				return err
+			}
+			dist = append(dist, fo)
+		case "cr:FileSet":
+			var fs FileSet
+			if err := json.Unmarshal(raw, &fs); err != nil {
+				return err
+			}
+			dist = append(dist, fs)
+		default:
+			return types.CroissantError{
+				Message: "unknown @type",
+				Value:   typeProbe.Type,
+			}
+		}
+	}
+
+	*d = dist
+
+	return nil
+}
+
 type FileObject struct {
 	// Must be FileObject
 	NType string `json:"@type"`
-	// Node ID
-	NId string `json:"@id"`
+	// Node ID.
+	ClassRefItem
 	// The name of the file.
 	Name string `json:"name"`
 	// Description of file.
@@ -44,7 +106,7 @@ type FileSet struct {
 	// Must be FileSet.
 	NType string `json:"@type"`
 	// Node ID
-	NId string `json:"@id"`
+	ClassRefItem
 	// Name of FileSet
 	Name string `json:"name"`
 	// Description of FileSet

@@ -105,9 +105,9 @@ linters:
 output:
   formats:
     tab:
-      path: "./docs/lint/kr8-linting.txt"
+      path: "./docs/lint/linting.txt"
       colors: false
-  path-prefix: "kr8"
+  path-prefix: ""
   show-stats: true
   sort-order:
     - linter

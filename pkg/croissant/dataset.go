@@ -31,9 +31,9 @@ type DataSet struct {
 	// Url of the dataset, usually a webpage.
 	URL string `json:"url"`
 	// One or more Person or Organizations that created the dataset.
-	Creator []string `json:"creator"`
+	Creator []string `json:"creator,omitempty"`
 	// The date the dataset was published.
-	DatePublished string `json:"datePublished"`
+	DatePublished string `json:"datePublished,omitempty"`
 
 	// Recommended Properties
 
@@ -95,62 +95,6 @@ func (ds *DataSet) WriteToFile(path string) error {
 	}
 
 	return util.WriteFile(str, path)
-}
-
-// Type used to group data resource objects together.
-type DistributionItem interface{}
-
-type Distribution []DistributionItem
-
-func (d *Distribution) UnmarshalJSON(data []byte) error {
-	// distribution can be an object or array of objects
-	var rawItems []json.RawMessage
-
-	if data[0] == '[' {
-		// It's an array
-		if err := json.Unmarshal(data, &rawItems); err != nil {
-			return err
-		}
-	} else {
-		// Single object, treat as one-element array
-		rawItems = []json.RawMessage{data}
-	}
-
-	dist := []DistributionItem{}
-
-	for _, raw := range rawItems {
-		// Peek at @type
-		var typeProbe struct {
-			Type string `json:"@type"`
-		}
-		if err := json.Unmarshal(raw, &typeProbe); err != nil {
-			return err
-		}
-
-		switch typeProbe.Type {
-		case "cr:FileObject":
-			var fo FileObject
-			if err := json.Unmarshal(raw, &fo); err != nil {
-				return err
-			}
-			dist = append(dist, fo)
-		case "cr:FileSet":
-			var fs FileSet
-			if err := json.Unmarshal(raw, &fs); err != nil {
-				return err
-			}
-			dist = append(dist, fs)
-		default:
-			return types.CroissantError{
-				Message: "unknown @type",
-				Value:   typeProbe.Type,
-			}
-		}
-	}
-
-	*d = dist
-
-	return nil
 }
 
 // The suggested context to use in a Croissant Json-LD file.

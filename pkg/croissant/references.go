@@ -7,6 +7,7 @@ import (
 )
 
 type ClassRefItem struct {
+	// ID of the resource.
 	Id string `json:"@id,omitempty"`
 }
 
@@ -31,5 +32,16 @@ func (ref *ClassRefList) UnmarshalJSON(data []byte) error {
 	return types.CroissantError{
 		Message: "StringOrSlice: cannot unmarshal",
 		Value:   string(data),
+	}
+}
+
+func (ref ClassRefList) MarshalJSON() ([]byte, error) {
+	switch len(ref) {
+	case 0:
+		return []byte("{}"), nil
+	case 1:
+		return json.Marshal(ref[0])
+	default:
+		return json.Marshal(ref)
 	}
 }

@@ -48,13 +48,16 @@ var TestCmd = &cobra.Command{
             log.Logger.Fatal().Msg("invalid path param")
         }
 
-        ds, err := croissant.NewDataSetFromPath(args[0])
+        dataSet, err := croissant.NewDataSetFromPath(args[0])
         if err != nil {
             log.Logger.Fatal().AnErr("DatasetFromPath", err).Msg("error loading file")
         }
 
-        log.Logger.Info().Str("name", ds.Name).Msg("Dataset name")
-        ds.WriteToFile("./out.json")
+        log.Logger.Info().Str("name", dataSet.Name).Msg("Dataset name")
+        err = dataSet.WriteToFile("./out.json")
+        if err != nil {
+            log.Logger.Error().AnErr("Marshalling", err).Msg("err")
+        }
     },
 }
 ```
