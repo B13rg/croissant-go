@@ -101,17 +101,18 @@
 <li><a href="https://github.com/mlcommons/croissant/blob/main/docs/croissant-spec.md">Official Spec</a></li>
 </ul>
 <h2 id="croissant-class-diagram">Croissant Class Diagram</h2>
-<pre><code class="language-mermaid">classDiagram
-    Dataset -- &quot;many&quot; FileObject : distribution
-    Dataset -- &quot;many&quot; FileSet : distribution
-    Dataset -- &quot;many&quot; RecordSet : recordSet
-    RecordSet -- &quot;many&quot; Field : field
-    FileObject -- &quot;many&quot; FileSet : containedIn
-    FileSet -- &quot;many&quot; FileObject : containedIn
-    Field -- &quot;one&quot; DataSource : source
-    DataSource -- &quot;one&quot; FileObject : fileObject
-    DataSource -- &quot;one&quot; FileSet : fileSet
-    DataSource -- &quot;one&quot; RecordSet : recordSet
+<div class="mermaid">
+classDiagram
+    Dataset -- "many" FileObject : distribution
+    Dataset -- "many" FileSet : distribution
+    Dataset -- "many" RecordSet : recordSet
+    RecordSet -- "many" Field : field
+    FileObject -- "many" FileSet : containedIn
+    FileSet -- "many" FileObject : containedIn
+    Field -- "one" DataSource : source
+    DataSource -- "one" FileObject : fileObject
+    DataSource -- "one" FileSet : fileSet
+    DataSource -- "one" RecordSet : recordSet
     class Dataset {
         +@type
         +@context
@@ -187,7 +188,9 @@
         +column
         +jsonPath
     }
-</code></pre>
+</div>
+<script type="module">import mermaid from "https://unpkg.com/mermaid@10.4.0/dist/mermaid.esm.min.mjs";
+mermaid.initialize({});</script>
               
             </div>
           </div><footer>
@@ -240,5 +243,5 @@
 
 <!--
 MkDocs version : 1.6.1
-Build Date UTC : 2025-08-08 18:01:05.845627+00:00
+Build Date UTC : 2025-08-08 18:11:33.984855+00:00
 -->

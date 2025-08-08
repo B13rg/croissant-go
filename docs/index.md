@@ -8,7 +8,7 @@ A lightweight Go library for working with the Croissant data format, designed to
 
 ## Croissant Class Diagram
 
-```mermaid
+<div class="mermaid">
 classDiagram
     Dataset -- "many" FileObject : distribution
     Dataset -- "many" FileSet : distribution
@@ -95,4 +95,6 @@ classDiagram
         +column
         +jsonPath
     }
-```
+</div>
+<script type="module">import mermaid from "https://unpkg.com/mermaid@10.4.0/dist/mermaid.esm.min.mjs";
+mermaid.initialize({});</script>
