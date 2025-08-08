@@ -192,6 +192,12 @@ func (ds *DataSet) Validate() ([]types.CroissantWarning, []types.CroissantError)
 				Value:   "",
 			},
 		)
+	} else {
+		for _, dist := range ds.Distribution {
+			dWarn, dErr := dist.Validate()
+			listWarn = append(listWarn, dWarn...)
+			listError = append(listError, dErr...)
+		}
 	}
 
 	if len(ds.RecordSets) == 0 {
@@ -201,6 +207,12 @@ func (ds *DataSet) Validate() ([]types.CroissantWarning, []types.CroissantError)
 				Value:   "",
 			},
 		)
+	} else {
+		for _, rs := range ds.RecordSets {
+			rWarn, rErr := rs.Validate()
+			listWarn = append(listWarn, rWarn...)
+			listError = append(listError, rErr...)
+		}
 	}
 
 	return listWarn, listError

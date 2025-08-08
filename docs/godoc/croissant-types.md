@@ -27,7 +27,7 @@ Croissant spec filetypes and relations.
   - [func NewDataSet\(\) \*DataSet](<#NewDataSet>)
   - [func NewDataSetFromPath\(filePath string\) \(\*DataSet, error\)](<#NewDataSetFromPath>)
   - [func NewFileSet\(\) \*DataSet](<#NewFileSet>)
-  - [func \(ds DataSet\) Validate\(\) \(\[\]types.CroissantWarning, \[\]types.CroissantError\)](<#DataSet.Validate>)
+  - [func \(ds \*DataSet\) Validate\(\) \(\[\]types.CroissantWarning, \[\]types.CroissantError\)](<#DataSet.Validate>)
   - [func \(ds \*DataSet\) WriteToFile\(path string\) error](<#DataSet.WriteToFile>)
 - [type DataSource](<#DataSource>)
   - [func NewDataSource\(\) \*DataSource](<#NewDataSource>)
@@ -255,7 +255,7 @@ func NewDataSet() *DataSet
 
 
 <a name="NewDataSetFromPath"></a>
-### func [NewDataSetFromPath](<https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/dataset.go#L208>)
+### func [NewDataSetFromPath](<https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/dataset.go#L221>)
 
 ```go
 func NewDataSetFromPath(filePath string) (*DataSet, error)
@@ -264,7 +264,7 @@ func NewDataSetFromPath(filePath string) (*DataSet, error)
 
 
 <a name="NewFileSet"></a>
-### func [NewFileSet](<https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/file_resources.go#L171>)
+### func [NewFileSet](<https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/file_resources.go#L173>)
 
 ```go
 func NewFileSet() *DataSet
@@ -273,16 +273,16 @@ func NewFileSet() *DataSet
 
 
 <a name="DataSet.Validate"></a>
-### func \(DataSet\) [Validate](<https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/dataset.go#L82>)
+### func \(\*DataSet\) [Validate](<https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/dataset.go#L82>)
 
 ```go
-func (ds DataSet) Validate() ([]types.CroissantWarning, []types.CroissantError)
+func (ds *DataSet) Validate() ([]types.CroissantWarning, []types.CroissantError)
 ```
 
 
 
 <a name="DataSet.WriteToFile"></a>
-### func \(\*DataSet\) [WriteToFile](<https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/dataset.go#L218>)
+### func \(\*DataSet\) [WriteToFile](<https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/dataset.go#L231>)
 
 ```go
 func (ds *DataSet) WriteToFile(path string) error
@@ -356,7 +356,7 @@ type Distribution []DistributionItem
 ```
 
 <a name="Distribution.UnmarshalJSON"></a>
-### func \(\*Distribution\) [UnmarshalJSON](<https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/file_resources.go#L14>)
+### func \(\*Distribution\) [UnmarshalJSON](<https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/file_resources.go#L16>)
 
 ```go
 func (d *Distribution) UnmarshalJSON(data []byte) error
@@ -365,12 +365,14 @@ func (d *Distribution) UnmarshalJSON(data []byte) error
 
 
 <a name="DistributionItem"></a>
-## type [DistributionItem](<https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/file_resources.go#L12>)
+## type [DistributionItem](<https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/file_resources.go#L12-L14>)
 
 
 
 ```go
-type DistributionItem interface{}
+type DistributionItem interface {
+    Validate() ([]types.CroissantWarning, []types.CroissantError)
+}
 ```
 
 <a name="Extract"></a>
@@ -487,7 +489,7 @@ func (ref *FieldRefSlice) UnmarshalJSON(data []byte) error
 
 
 <a name="FileObject"></a>
-## type [FileObject](<https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/file_resources.go#L65-L85>)
+## type [FileObject](<https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/file_resources.go#L67-L87>)
 
 
 
@@ -516,7 +518,7 @@ type FileObject struct {
 ```
 
 <a name="NewFileObject"></a>
-### func [NewFileObject](<https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/file_resources.go#L87>)
+### func [NewFileObject](<https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/file_resources.go#L89>)
 
 ```go
 func NewFileObject() *FileObject
@@ -525,7 +527,7 @@ func NewFileObject() *FileObject
 
 
 <a name="FileObject.Update"></a>
-### func \(\*FileObject\) [Update](<https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/file_resources.go#L148>)
+### func \(\*FileObject\) [Update](<https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/file_resources.go#L150>)
 
 ```go
 func (*FileObject) Update() error
@@ -534,7 +536,7 @@ func (*FileObject) Update() error
 Update FileObject struct from resource.
 
 <a name="FileObject.Validate"></a>
-### func \(\*FileObject\) [Validate](<https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/file_resources.go#L91>)
+### func \(\*FileObject\) [Validate](<https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/file_resources.go#L93>)
 
 ```go
 func (obj *FileObject) Validate() ([]types.CroissantWarning, []types.CroissantError)
@@ -543,7 +545,7 @@ func (obj *FileObject) Validate() ([]types.CroissantWarning, []types.CroissantEr
 
 
 <a name="FileObject.ValidateHash"></a>
-### func \(\*FileObject\) [ValidateHash](<https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/file_resources.go#L143>)
+### func \(\*FileObject\) [ValidateHash](<https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/file_resources.go#L145>)
 
 ```go
 func (*FileObject) ValidateHash() error
@@ -552,7 +554,7 @@ func (*FileObject) ValidateHash() error
 
 
 <a name="FileSet"></a>
-## type [FileSet](<https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/file_resources.go#L152-L169>)
+## type [FileSet](<https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/file_resources.go#L154-L171>)
 
 
 
@@ -578,7 +580,7 @@ type FileSet struct {
 ```
 
 <a name="FileSet.Update"></a>
-### func \(\*FileSet\) [Update](<https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/file_resources.go#L206>)
+### func \(\*FileSet\) [Update](<https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/file_resources.go#L208>)
 
 ```go
 func (*FileSet) Update() error
@@ -587,7 +589,7 @@ func (*FileSet) Update() error
 Update FileSet struct from resource.
 
 <a name="FileSet.Validate"></a>
-### func \(\*FileSet\) [Validate](<https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/file_resources.go#L175>)
+### func \(\*FileSet\) [Validate](<https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/file_resources.go#L177>)
 
 ```go
 func (obj *FileSet) Validate() ([]types.CroissantWarning, []types.CroissantError)

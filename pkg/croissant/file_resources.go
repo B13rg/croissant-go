@@ -9,7 +9,9 @@ import (
 
 // Type used to group data resource objects together.
 type Distribution []DistributionItem
-type DistributionItem interface{}
+type DistributionItem interface {
+	Validate() ([]types.CroissantWarning, []types.CroissantError)
+}
 
 func (d *Distribution) UnmarshalJSON(data []byte) error {
 	// distribution can be an object or array of objects
@@ -42,13 +44,13 @@ func (d *Distribution) UnmarshalJSON(data []byte) error {
 			if err := json.Unmarshal(raw, &fo); err != nil {
 				return err
 			}
-			dist = append(dist, fo)
+			dist = append(dist, &fo)
 		case "cr:FileSet":
 			var fs FileSet
 			if err := json.Unmarshal(raw, &fs); err != nil {
 				return err
 			}
-			dist = append(dist, fs)
+			dist = append(dist, &fs)
 		default:
 			return types.CroissantError{
 				Message: "unknown @type",
