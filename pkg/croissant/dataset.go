@@ -133,7 +133,7 @@ func (ds *DataSet) Validate() ([]types.CroissantWarning, []types.CroissantError)
 	if ds.URL == "" {
 		listError = append(listError,
 			types.CroissantError{
-				Message: "dataset name should be set",
+				Message: "dataset url should be set",
 				Value:   "",
 			},
 		)
@@ -160,29 +160,10 @@ func (ds *DataSet) Validate() ([]types.CroissantWarning, []types.CroissantError)
 	// Recommended Parameters
 
 	// Start by checking for a plain num version.
-	intVer := "^\\d+$"
-	match, err := regexp.MatchString(intVer, ds.Version)
-	cErr := util.ErrorIfCheck("error parsing version string", err)
-	if cErr != nil {
-		listError = append(listError, *cErr)
-	}
-	if !match {
-		// https://semver.org/#is-there-a-suggested-regular-expression-regex-to-check-a-semver-string
-		//nolint:lll
-		semanticVer := "^(0|[1-9]\\d*)\\.(0|[1-9]\\d*)\\.(0|[1-9]\\d*)(?:-((?:0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\\.(?:0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\\+([0-9a-zA-Z-]+(?:\\.[0-9a-zA-Z-]+)*))?$"
-		match, err = regexp.MatchString(semanticVer, ds.Version)
-		cErr := util.ErrorIfCheck("error parsing version string", err)
-		if cErr != nil {
-			listError = append(listError, *cErr)
-		}
-	}
-	if !match {
-		listWarn = append(listWarn,
-			types.CroissantWarning{
-				Message: "issue parsing dataset version as int or SemVer",
-				Value:   ds.Version,
-			},
-		)
+	if ds.Version != "" {
+		verWarn, verError := validateVersion(ds.Version)
+		listWarn = append(listWarn, verWarn...)
+		listError = append(listError, verError...)
 	}
 
 	if len(ds.Distribution) == 0 {
@@ -215,6 +196,39 @@ func (ds *DataSet) Validate() ([]types.CroissantWarning, []types.CroissantError)
 		}
 	}
 
+	return listWarn, listError
+}
+
+func validateVersion(version string) ([]types.CroissantWarning, []types.CroissantError) {
+	listWarn := []types.CroissantWarning{}
+	listError := []types.CroissantError{}
+	if version == "" {
+		return []types.CroissantWarning{{Message: "version field is empty", Value: ""}}, listError
+	}
+	intVer := "^\\d+$"
+	match, err := regexp.MatchString(intVer, version)
+	cErr := util.ErrorIfCheck("error parsing version string", err)
+	if cErr != nil {
+		listError = append(listError, *cErr)
+	}
+	if !match {
+		// https://semver.org/#is-there-a-suggested-regular-expression-regex-to-check-a-semver-string
+		//nolint:lll
+		semanticVer := "^(0|[1-9]\\d*)\\.(0|[1-9]\\d*)\\.(0|[1-9]\\d*)(?:-((?:0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\\.(?:0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\\+([0-9a-zA-Z-]+(?:\\.[0-9a-zA-Z-]+)*))?$"
+		match, err = regexp.MatchString(semanticVer, version)
+		cErr := util.ErrorIfCheck("error parsing version string", err)
+		if cErr != nil {
+			listError = append(listError, *cErr)
+		}
+	}
+	if !match {
+		listWarn = append(listWarn,
+			types.CroissantWarning{
+				Message: "issue parsing dataset version as int or SemVer",
+				Value:   version,
+			},
+		)
+	}
 	return listWarn, listError
 }
 

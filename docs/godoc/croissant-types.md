@@ -255,7 +255,7 @@ func NewDataSet() *DataSet
 
 
 <a name="NewDataSetFromPath"></a>
-### func [NewDataSetFromPath](<https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/dataset.go#L221>)
+### func [NewDataSetFromPath](<https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/dataset.go#L235>)
 
 ```go
 func NewDataSetFromPath(filePath string) (*DataSet, error)
@@ -282,7 +282,7 @@ func (ds *DataSet) Validate() ([]types.CroissantWarning, []types.CroissantError)
 
 
 <a name="DataSet.WriteToFile"></a>
-### func \(\*DataSet\) [WriteToFile](<https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/dataset.go#L231>)
+### func \(\*DataSet\) [WriteToFile](<https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/dataset.go#L245>)
 
 ```go
 func (ds *DataSet) WriteToFile(path string) error

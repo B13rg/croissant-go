@@ -36,6 +36,7 @@ func TestValidateCroissantMetadataFiles(t *testing.T) {
 	"conformsTo": "http://mlcommons.org/croissant/1.0",
 	"license": ["MIT"],
 	"url": "http://example.com",
+	"version": "1",
 	"creator": ["Jane Doe"],
 	"datePublished": "2024-01-01",
 	"distribution": [],
@@ -56,6 +57,7 @@ func TestValidateCroissantMetadataFiles(t *testing.T) {
 	"license": [],
 	"name": "",
 	"url": "",
+	"version": "",
 	"creator": [],
 	"datePublished": "",
 	"distribution": [],
@@ -63,7 +65,7 @@ func TestValidateCroissantMetadataFiles(t *testing.T) {
 }
 `,
 			wantWarn:  2, // distribution and recordSet warnings
-			wantError: 7, // missing description, license, name, url, creator, datePublished
+			wantError: 6, // missing description, license, name, url, creator, datePublished
 		},
 		{
 			name: "Invalid type and conformsTo",
@@ -129,25 +131,35 @@ func TestValidateCroissantMetadataFiles(t *testing.T) {
 
 // Optional: Test loading from a directory of croissant metadata files
 func TestValidateAllCroissantFilesInDir(t *testing.T) {
-	testDir := "testdata/croissant"
+	testDir := "testdata/croissant/1.0"
 	files, err := os.ReadDir(testDir)
 	if err != nil {
 		t.Skip("Skipping directory test; testdata/croissant does not exist")
 		return
 	}
 
-	for _, file := range files {
-		if filepath.Ext(file.Name()) == ".json" {
-			t.Run(file.Name(), func(t *testing.T) {
-				ds, err := NewDataSetFromPath(filepath.Join(testDir, file.Name()))
-				if err != nil {
-					t.Fatalf("Failed to load croissant file %s: %v", file.Name(), err)
-				}
-				_, errs := ds.Validate()
-				if len(errs) > 0 {
-					t.Errorf("Croissant file %s is invalid: %+v", file.Name(), errs)
-				}
-			})
+	for _, dsDir := range files {
+		if !dsDir.IsDir() {
+			continue
+		}
+		dsFiles, err := os.ReadDir(filepath.Join(testDir, dsDir.Name()))
+		if err != nil {
+			t.Skip("Skipping directory test; testdata/croissant does not exist")
+			return
+		}
+		for _, file := range dsFiles {
+			if filepath.Ext(file.Name()) == ".json" {
+				t.Run(file.Name(), func(t *testing.T) {
+					ds, err := NewDataSetFromPath(filepath.Join(testDir, dsDir.Name(), file.Name()))
+					if err != nil {
+						t.Fatalf("Failed to load croissant file %s: %v", file.Name(), err)
+					}
+					_, errs := ds.Validate()
+					if len(errs) > 0 {
+						t.Errorf("Croissant file %s is invalid: %+v", file.Name(), errs)
+					}
+				})
+			}
 		}
 	}
 }

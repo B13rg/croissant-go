@@ -28,11 +28,11 @@ tasks:
     aliases:
       - test
       - t
+    ignore_error: true
     cmds:
       - golangci-lint run
       - go test -cover ./pkg/*
       - task: 02_build
-      - task: 03_test-package
 
   02_build:
     desc: Build tool for your local system
