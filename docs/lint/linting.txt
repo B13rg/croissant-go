@@ -1,4 +1,3 @@
-pkg/croissant/dataset.go:82:1           cyclop       calculated cyclomatic complexity for function Validate is 15, max is 10
 pkg/croissant/dataset.go:73:10          exhaustruct  croissant.DataSet is missing fields Name, CiteAs, URL, Creator, DatePublished, Keywords, Publisher, Version, DateCreated, DateModified, SameAs, SdLicense, InLanguage, IsLiveDataset, Distribution, RecordSets
 pkg/croissant/datasource.go:24:10       exhaustruct  croissant.DataSource is missing fields NType, ClassRefItem, FileObject, FileSet, RecordSet, Extract, Transform, Format
 pkg/croissant/datasource.go:39:10       exhaustruct  croissant.Extract is missing fields FileProperty, Column, JsonPath
@@ -8,12 +7,3 @@ pkg/croissant/field.go:36:10            exhaustruct  croissant.Field is missing 
 pkg/croissant/file_resources.go:90:10   exhaustruct  croissant.FileObject is missing fields Type, ClassRefItem, Name, Description, ContentURL, ContentSize, EncodingFormat, Sha256, ContainedIn
 pkg/croissant/file_resources.go:174:10  exhaustruct  croissant.DataSet is missing fields Context, Type, Name, Description, ConformsTo, CiteAs, License, URL, Creator, DatePublished, Keywords, Publisher, Version, DateCreated, DateModified, SameAs, SdLicense, InLanguage, IsLiveDataset, Distribution, RecordSets
 pkg/croissant/recordset.go:28:10        exhaustruct  croissant.RecordSet is missing fields Type, ClassRefItem, Name, Description, DataType, Key, Field, Data, Examples
-pkg/croissant/recordset.go:79:10        exhaustruct  croissant.Split is missing fields TrainSplit, TestSplit, ValidationSplit
-pkg/croissant/dataset_test.go:9:1       godot        Comment should end in a period
-pkg/croissant/dataset_test.go:20:1      godot        Comment should end in a period
-pkg/croissant/dataset_test.go:132:1     godot        Comment should end in a period
-pkg/croissant/dataset_test.go:13:9      gosec        G306: Expect WriteFile permissions to be 0600 or less
-pkg/croissant/dataset.go:232:2          nlreturn     return with no blank line before
-pkg/croissant/dataset_test.go:17:2      nlreturn     return with no blank line before
-pkg/croissant/dataset_test.go:138:3     nlreturn     return with no blank line before
-pkg/croissant/dataset_test.go:113:6     varnamelen   variable name 'tc' is too short for the scope of its usage

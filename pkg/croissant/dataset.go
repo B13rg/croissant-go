@@ -80,86 +80,19 @@ func NewDataSet() *DataSet {
 }
 
 func (ds *DataSet) Validate() ([]types.CroissantWarning, []types.CroissantError) {
-	listWarn := []types.CroissantWarning{}
-	listError := []types.CroissantError{}
-
 	// Required Parameters
-	if ds.Type != "schema.org/Dataset" {
-		listError = append(listError,
-			types.CroissantError{
-				Message: "@type must be schema.org/Dataset",
-				Value:   ds.Type,
-			},
-		)
-	}
-
-	if ds.ConformsTo != "http://mlcommons.org/croissant/1.0" &&
-		ds.ConformsTo != "http://mlcommons.org/croissant/1.1" {
-		listError = append(listError,
-			types.CroissantError{
-				Message: "conformsTo must be http://mlcommons.org/croissant/1.[0,1]",
-				Value:   ds.ConformsTo,
-			},
-		)
-	}
-
-	if ds.Description == "" {
-		listError = append(listError,
-			types.CroissantError{
-				Message: "dataset description should be set",
-				Value:   "",
-			},
-		)
-	}
-
-	if len(ds.License) == 0 {
-		listError = append(listError,
-			types.CroissantError{
-				Message: "dataset license should be set",
-				Value:   "",
-			},
-		)
-	}
-
-	if ds.Name == "" {
-		listError = append(listError,
-			types.CroissantError{
-				Message: "dataset name should be set",
-				Value:   "",
-			},
-		)
-	}
-
-	if ds.URL == "" {
-		listError = append(listError,
-			types.CroissantError{
-				Message: "dataset url should be set",
-				Value:   "",
-			},
-		)
-	}
-
-	if len(ds.Creator) == 0 {
-		listError = append(listError,
-			types.CroissantError{
-				Message: "dataset creator should be set",
-				Value:   "",
-			},
-		)
-	}
-
-	if ds.DatePublished == "" {
-		listError = append(listError,
-			types.CroissantError{
-				Message: "dataset datePublished should be set",
-				Value:   "",
-			},
-		)
-	}
+	listError := ds.ValidateRequiredProps()
 
 	// Recommended Parameters
-
 	// Start by checking for a plain num version.
+	listWarn, recError := ds.ValidateRecommendedProps()
+
+	return listWarn, append(listError, recError...)
+}
+
+func (ds *DataSet) ValidateRecommendedProps() ([]types.CroissantWarning, []types.CroissantError) {
+	listWarn := []types.CroissantWarning{}
+	listError := []types.CroissantError{}
 	if ds.Version != "" {
 		verWarn, verError := validateVersion(ds.Version)
 		listWarn = append(listWarn, verWarn...)
@@ -167,12 +100,7 @@ func (ds *DataSet) Validate() ([]types.CroissantWarning, []types.CroissantError)
 	}
 
 	if len(ds.Distribution) == 0 {
-		listWarn = append(listWarn,
-			types.CroissantWarning{
-				Message: "dataset distribution empty",
-				Value:   "",
-			},
-		)
+		listWarn = append(listWarn, types.CroissantWarning{Message: "dataset distribution empty", Value: ""})
 	} else {
 		for _, dist := range ds.Distribution {
 			dWarn, dErr := dist.Validate()
@@ -182,12 +110,7 @@ func (ds *DataSet) Validate() ([]types.CroissantWarning, []types.CroissantError)
 	}
 
 	if len(ds.RecordSets) == 0 {
-		listWarn = append(listWarn,
-			types.CroissantWarning{
-				Message: "dataset recordSets empty",
-				Value:   "",
-			},
-		)
+		listWarn = append(listWarn, types.CroissantWarning{Message: "dataset recordSets empty", Value: ""})
 	} else {
 		for _, rs := range ds.RecordSets {
 			rWarn, rErr := rs.Validate()
@@ -197,6 +120,41 @@ func (ds *DataSet) Validate() ([]types.CroissantWarning, []types.CroissantError)
 	}
 
 	return listWarn, listError
+}
+
+func (ds *DataSet) ValidateRequiredProps() []types.CroissantError {
+	listError := []types.CroissantError{}
+	if ds.Type != "schema.org/Dataset" {
+		listError = append(listError, types.CroissantError{Message: "@type must be schema.org/Dataset", Value: ds.Type})
+	}
+
+	if ds.ConformsTo != "http://mlcommons.org/croissant/1.0" &&
+		ds.ConformsTo != "http://mlcommons.org/croissant/1.1" {
+		listError = append(listError,
+			types.CroissantError{Message: "conformsTo must be http://mlcommons.org/croissant/1.[0,1]", Value: ds.ConformsTo},
+		)
+	}
+
+	if ds.Description == "" {
+		listError = append(listError, types.CroissantError{Message: "dataset description should be set", Value: ""})
+	}
+	if len(ds.License) == 0 {
+		listError = append(listError, types.CroissantError{Message: "dataset license should be set", Value: ""})
+	}
+	if ds.Name == "" {
+		listError = append(listError, types.CroissantError{Message: "dataset name should be set", Value: ""})
+	}
+	if ds.URL == "" {
+		listError = append(listError, types.CroissantError{Message: "dataset url should be set", Value: ""})
+	}
+	if len(ds.Creator) == 0 {
+		listError = append(listError, types.CroissantError{Message: "dataset creator should be set", Value: ""})
+	}
+	if ds.DatePublished == "" {
+		listError = append(listError, types.CroissantError{Message: "dataset datePublished should be set", Value: ""})
+	}
+
+	return listError
 }
 
 func validateVersion(version string) ([]types.CroissantWarning, []types.CroissantError) {
@@ -229,6 +187,7 @@ func validateVersion(version string) ([]types.CroissantWarning, []types.Croissan
 			},
 		)
 	}
+
 	return listWarn, listError
 }
 

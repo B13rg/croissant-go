@@ -28,6 +28,8 @@ Croissant spec filetypes and relations.
   - [func NewDataSetFromPath\(filePath string\) \(\*DataSet, error\)](<#NewDataSetFromPath>)
   - [func NewFileSet\(\) \*DataSet](<#NewFileSet>)
   - [func \(ds \*DataSet\) Validate\(\) \(\[\]types.CroissantWarning, \[\]types.CroissantError\)](<#DataSet.Validate>)
+  - [func \(ds \*DataSet\) ValidateRecommendedProps\(\) \(\[\]types.CroissantWarning, \[\]types.CroissantError\)](<#DataSet.ValidateRecommendedProps>)
+  - [func \(ds \*DataSet\) ValidateRequiredProps\(\) \[\]types.CroissantError](<#DataSet.ValidateRequiredProps>)
   - [func \(ds \*DataSet\) WriteToFile\(path string\) error](<#DataSet.WriteToFile>)
 - [type DataSource](<#DataSource>)
   - [func NewDataSource\(\) \*DataSource](<#NewDataSource>)
@@ -58,7 +60,7 @@ Croissant spec filetypes and relations.
   - [func NewRecordSet\(\) \*RecordSet](<#NewRecordSet>)
   - [func \(obj \*RecordSet\) Validate\(\) \(\[\]types.CroissantWarning, \[\]types.CroissantError\)](<#RecordSet.Validate>)
 - [type Split](<#Split>)
-  - [func NewSplit\(\) \*Split](<#NewSplit>)
+  - [func NewSplit\(trainSplit string, testSplit string, validationSplit string\) \*Split](<#NewSplit>)
 - [type Transform](<#Transform>)
   - [func NewTransform\(\) \*Transform](<#NewTransform>)
 
@@ -255,7 +257,7 @@ func NewDataSet() *DataSet
 
 
 <a name="NewDataSetFromPath"></a>
-### func [NewDataSetFromPath](<https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/dataset.go#L235>)
+### func [NewDataSetFromPath](<https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/dataset.go#L194>)
 
 ```go
 func NewDataSetFromPath(filePath string) (*DataSet, error)
@@ -281,8 +283,26 @@ func (ds *DataSet) Validate() ([]types.CroissantWarning, []types.CroissantError)
 
 
 
+<a name="DataSet.ValidateRecommendedProps"></a>
+### func \(\*DataSet\) [ValidateRecommendedProps](<https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/dataset.go#L93>)
+
+```go
+func (ds *DataSet) ValidateRecommendedProps() ([]types.CroissantWarning, []types.CroissantError)
+```
+
+
+
+<a name="DataSet.ValidateRequiredProps"></a>
+### func \(\*DataSet\) [ValidateRequiredProps](<https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/dataset.go#L125>)
+
+```go
+func (ds *DataSet) ValidateRequiredProps() []types.CroissantError
+```
+
+
+
 <a name="DataSet.WriteToFile"></a>
-### func \(\*DataSet\) [WriteToFile](<https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/dataset.go#L245>)
+### func \(\*DataSet\) [WriteToFile](<https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/dataset.go#L204>)
 
 ```go
 func (ds *DataSet) WriteToFile(path string) error
@@ -669,7 +689,7 @@ type Split struct {
 ### func [NewSplit](<https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/recordset.go#L78>)
 
 ```go
-func NewSplit() *Split
+func NewSplit(trainSplit string, testSplit string, validationSplit string) *Split
 ```
 
 

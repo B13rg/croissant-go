@@ -92,6 +92,10 @@
     </li>
     <li class="toctree-l3"><a class="reference internal" href="#func-dataset-validate">func (*DataSet) Validate</a>
     </li>
+    <li class="toctree-l3"><a class="reference internal" href="#func-dataset-validaterecommendedprops">func (*DataSet) ValidateRecommendedProps</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#func-dataset-validaterequiredprops">func (*DataSet) ValidateRequiredProps</a>
+    </li>
     <li class="toctree-l3"><a class="reference internal" href="#func-dataset-writetofile">func (*DataSet) WriteToFile</a>
     </li>
         </ul>
@@ -232,6 +236,8 @@
 <li><a href="#NewDataSetFromPath">func NewDataSetFromPath(filePath string) (*DataSet, error)</a></li>
 <li><a href="#NewFileSet">func NewFileSet() *DataSet</a></li>
 <li><a href="#DataSet.Validate">func (ds *DataSet) Validate() ([]types.CroissantWarning, []types.CroissantError)</a></li>
+<li><a href="#DataSet.ValidateRecommendedProps">func (ds *DataSet) ValidateRecommendedProps() ([]types.CroissantWarning, []types.CroissantError)</a></li>
+<li><a href="#DataSet.ValidateRequiredProps">func (ds *DataSet) ValidateRequiredProps() []types.CroissantError</a></li>
 <li><a href="#DataSet.WriteToFile">func (ds *DataSet) WriteToFile(path string) error</a></li>
 <li><a href="#DataSource">type DataSource</a></li>
 <li><a href="#NewDataSource">func NewDataSource() *DataSource</a></li>
@@ -262,7 +268,7 @@
 <li><a href="#NewRecordSet">func NewRecordSet() *RecordSet</a></li>
 <li><a href="#RecordSet.Validate">func (obj *RecordSet) Validate() ([]types.CroissantWarning, []types.CroissantError)</a></li>
 <li><a href="#Split">type Split</a></li>
-<li><a href="#NewSplit">func NewSplit() *Split</a></li>
+<li><a href="#NewSplit">func NewSplit(trainSplit string, testSplit string, validationSplit string) *Split</a></li>
 <li><a href="#Transform">type Transform</a></li>
 <li><a href="#NewTransform">func NewTransform() *Transform</a></li>
 </ul>
@@ -415,7 +421,7 @@
 <pre><code class="language-go">func NewDataSet() *DataSet
 </code></pre>
 <p><a name="NewDataSetFromPath"></a></p>
-<h3 id="func-newdatasetfrompath">func <a href="https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/dataset.go#L235">NewDataSetFromPath</a></h3>
+<h3 id="func-newdatasetfrompath">func <a href="https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/dataset.go#L194">NewDataSetFromPath</a></h3>
 <pre><code class="language-go">func NewDataSetFromPath(filePath string) (*DataSet, error)
 </code></pre>
 <p><a name="NewFileSet"></a></p>
@@ -426,8 +432,16 @@
 <h3 id="func-dataset-validate">func (*DataSet) <a href="https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/dataset.go#L82">Validate</a></h3>
 <pre><code class="language-go">func (ds *DataSet) Validate() ([]types.CroissantWarning, []types.CroissantError)
 </code></pre>
+<p><a name="DataSet.ValidateRecommendedProps"></a></p>
+<h3 id="func-dataset-validaterecommendedprops">func (*DataSet) <a href="https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/dataset.go#L93">ValidateRecommendedProps</a></h3>
+<pre><code class="language-go">func (ds *DataSet) ValidateRecommendedProps() ([]types.CroissantWarning, []types.CroissantError)
+</code></pre>
+<p><a name="DataSet.ValidateRequiredProps"></a></p>
+<h3 id="func-dataset-validaterequiredprops">func (*DataSet) <a href="https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/dataset.go#L125">ValidateRequiredProps</a></h3>
+<pre><code class="language-go">func (ds *DataSet) ValidateRequiredProps() []types.CroissantError
+</code></pre>
 <p><a name="DataSet.WriteToFile"></a></p>
-<h3 id="func-dataset-writetofile">func (*DataSet) <a href="https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/dataset.go#L245">WriteToFile</a></h3>
+<h3 id="func-dataset-writetofile">func (*DataSet) <a href="https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/dataset.go#L204">WriteToFile</a></h3>
 <pre><code class="language-go">func (ds *DataSet) WriteToFile(path string) error
 </code></pre>
 <p><a name="DataSource"></a></p>
@@ -665,7 +679,7 @@
 </code></pre>
 <p><a name="NewSplit"></a></p>
 <h3 id="func-newsplit">func <a href="https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/recordset.go#L78">NewSplit</a></h3>
-<pre><code class="language-go">func NewSplit() *Split
+<pre><code class="language-go">func NewSplit(trainSplit string, testSplit string, validationSplit string) *Split
 </code></pre>
 <p><a name="Transform"></a></p>
 <h2 id="type-transform">type <a href="https://github.com:b13rg/croissant-go/blob/main/pkg/croissant/datasource.go#L42-L51">Transform</a></h2>

@@ -75,6 +75,6 @@ type Split struct {
 	ValidationSplit string
 }
 
-func NewSplit() *Split {
-	return &Split{}
+func NewSplit(trainSplit string, testSplit string, validationSplit string) *Split {
+	return &Split{TrainSplit: trainSplit, TestSplit: testSplit, ValidationSplit: validationSplit}
 }
